@@ -1,0 +1,28 @@
+from crosswords.clues.prompts.constants import BAD_CLUE_EXPLANATION
+
+
+class Clue:
+    def __init__(self, word: str, clue: str = "", explanation: str = ""):
+        self.word = word
+        self.clue = clue
+        self.explanation = explanation
+
+    def set_clue(self, clue: str):
+        self.clue = clue
+
+    def set_explanation(self, explanation: str):
+        self.explanation = explanation
+
+    def is_valid(self):
+        return self.explanation != BAD_CLUE_EXPLANATION and self.explanation != ""
+
+    def __str__(self):
+        return "<Word: {}, Clue: {} (Explanation: {})>".format(self.word, self.clue, self.explanation)
+
+    def as_dict(self):
+        return {
+            "type": "__clue__",
+            "word": self.word,
+            "clue": self.clue,
+            "explanation": self.explanation
+        }
