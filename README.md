@@ -33,7 +33,7 @@ A few modules in the crosswords domain:
 
 ## How to run
 
-### For fine-tuning LLama13b
+### Fine-tuning LLama13b
 - Create an AWS role `Sagemaker_deploy_training_role`
 - Make sure you have quota to run `ml.g5.24xlarge` instances, needed for fine-tuning llama 13b
 - Go to the `fine_tuning` directory
@@ -69,8 +69,6 @@ python -m venv ~/.virtualenvs/crosswords_ai
 source ~/.virtualenvs/crosswords_ai/bin/activate
 pip install -r requirements.txt
 ```
-
-To run python tests: `python -m unittest crosswords/**/*.py`
 
 To run the server:
 ```shell
@@ -112,3 +110,8 @@ c o n d i t i o n a l
 . . . . . . n . . . . 
 ```
 
+### Developing
+
+- To run python tests: `python -m unittest crosswords/**/*.py`
+- Running coverage: `coverage run -m unittest crosswords/**/*.py` and then `coverage report -m`
+- Formatting: `python -m black crosswords`

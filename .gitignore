@@ -1,0 +1,14 @@
+# Notebooks
+notebooks/*.ipynb
+.ipynb_checkpoints/
+
+.idea/
+.DS_Store
+
+
+__pycache__/
+
+fine_tuning/dataset/*.csv
+fine_tuning/dataset/train.jsonl
+
+.coverage
