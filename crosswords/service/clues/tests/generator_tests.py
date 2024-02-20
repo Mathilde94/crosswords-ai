@@ -5,7 +5,7 @@ from unittest import mock
 
 from crosswords.models.concept import Concept
 from crosswords.service.clues.generator import ClueGenerator
-from crosswords.service.clues.prompts.constants import GET_CLUE_FOR_WORD_IN_CONTEXT_TEMPLATE
+from crosswords.llm.prompts.clues import GET_CLUE_FOR_WORD_IN_CONTEXT_TEMPLATE
 
 
 def patch_get_clue_from_llm(*args, **kwargs):

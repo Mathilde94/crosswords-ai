@@ -1,4 +1,4 @@
-from crosswords.service.clues.prompts.constants import BAD_CLUE_EXPLANATION
+BAD_CLUE_EXPLANATION = "I can't find a good explanation for this clue"
 
 
 class Clue:

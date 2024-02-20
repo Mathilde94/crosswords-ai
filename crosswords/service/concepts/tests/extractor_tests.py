@@ -4,7 +4,7 @@ import unittest
 from unittest import mock
 
 from crosswords.service.concepts.extractor import ConceptExtractor
-from crosswords.service.concepts.prompts.constants import EXTRACT_CONCEPTS
+from crosswords.llm.prompts.concepts import EXTRACT_CONCEPTS
 
 
 CONCEPTS_TESTS = ["attributes", "class", "composition", "object"]

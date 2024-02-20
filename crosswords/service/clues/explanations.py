@@ -1,8 +1,8 @@
 from typing import List
 
 from crosswords.llm.prompt_interface import PromptInterface
+from crosswords.llm.prompts.clues import CLUE_EXPLANATION
 from crosswords.models.clue import Clue
-from crosswords.service.clues.prompts.constants import CLUE_EXPLANATION
 
 
 class ClueExplanationOperator(PromptInterface):

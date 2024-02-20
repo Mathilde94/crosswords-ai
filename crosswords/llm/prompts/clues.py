@@ -1,5 +1,3 @@
-BAD_CLUE_EXPLANATION = "I can't find a good explanation for this clue"
-
 GET_CLUE_FOR_WORD_IN_CONTEXT_TEMPLATE = """Below is an instruction that describes a task, paired with an input that provides further context.
 Write a response that appropriately completes the request.
 
