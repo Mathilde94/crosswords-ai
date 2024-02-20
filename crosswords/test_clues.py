@@ -20,9 +20,8 @@ async def get_clues(concepts, title, section, tries=3):
 async def main():
     title = "JavaScript from Beginner to Expert"
     section = "Conditional Statements"
-    extracts = """hello today we're going to talk about conditional statements"""
-    # concepts = await concepts_extractor.execute(title, section, extracts)
-    concepts = ["else", "instruction", "conditional", "debug", "function"]
+    extracts = """Main concepts we will be learning: statement, conditional, if/else, debug, block"""
+    concepts = await concepts_extractor.execute(title, section, extracts)
     print("Concepts", concepts)
     crosswords_factory = CrosswordFactory([Concept(c) for c in concepts])
     clues, best_crossword = await asyncio.gather(

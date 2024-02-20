@@ -60,18 +60,29 @@ Then you can run the inference that way:
 
 To run the environment:
 ```shell
+# If using pyenv: 
+pyenv install 3.11.5
 pyenv global 3.11.5
+
+# Create virtualenv
 python -m venv ~/.virtualenvs/crosswords_ai
 source ~/.virtualenvs/crosswords_ai/bin/activate
 pip install -r requirements.txt
 ```
 
-To run one example:
+To run python tests: `python -m unittest crosswords/**/*.py`
+
+To run the server:
 ```shell
-cd crosswords/
-python main.py
+uvicorn crosswords.main:app --reload
 ```
-And the results:
+
+Then go to: http://0.0.0.0:8000/docs#/default and test `POST` and `GET` endpoints.
+
+![crossword_post.png](images/crosswords_post.png)
+![crossword_get.png](images/crossword_get.png)
+
+Running file `test_clues` for an individual crossword should return something like this:
 ```python 
 Concepts ['else', 'instruction', 'conditional', 'debug', 'function']
 
@@ -101,6 +112,3 @@ c o n d i t i o n a l
 . . . . . . n . . . . 
 ```
 
-To run python tests: `python -m unittest crosswords/**/*.py`
-
-To run the server: <TODO>
