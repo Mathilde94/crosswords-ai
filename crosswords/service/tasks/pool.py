@@ -4,6 +4,7 @@ import queue
 from crosswords.service.tasks.executor import Executor
 
 log = logging.getLogger(__name__)
+global_thread_pool = None
 
 
 class ThreadPool:
@@ -28,4 +29,8 @@ class ThreadPool:
         log.info(f"Background crossword task queued: {crossword_id}")
 
 
-thread_pool = ThreadPool()
+def get_thread_pool():
+    global global_thread_pool
+    if global_thread_pool is None:
+        global_thread_pool = ThreadPool()
+    return global_thread_pool
