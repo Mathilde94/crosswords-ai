@@ -73,6 +73,11 @@ source ~/.virtualenvs/crosswords_ai/bin/activate
 pip install -r requirements.txt
 ```
 
+Run docker-compose to run Redis:
+```shell
+docker-compose up -d
+```
+
 To run the server:
 ```shell
 uvicorn crosswords.main:app --reload
