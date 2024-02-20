@@ -12,3 +12,9 @@ fine_tuning/dataset/*.csv
 fine_tuning/dataset/train.jsonl
 
 .coverage
+
+frontend/node_modules/
+frontend/dist/*.txt
+frontend/dist/*.js
+
+
