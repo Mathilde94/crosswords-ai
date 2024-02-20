@@ -14,15 +14,18 @@ class ConceptExtractor(PromptInterface):
         words = []
         for extract in extracts.split("\n"):
             w = self.llm_execute(title=title, section=section, extract=extract)
-            if "_title" in w or w == '':
+            if "_title" in w or w == "":
                 continue
             words += w.split(",")
         words = list(set(words))
         flat_words = []
         for w in words:
             flat_words += [
-                a.strip() for a in w.split(" ")
-                if (a != "" and self.MAX_LENGTH_CONCEPT > len(a) > self.MIN_LENGTH_CONCEPT)
+                a.strip()
+                for a in w.split(" ")
+                if (
+                    a != ""
+                    and self.MAX_LENGTH_CONCEPT > len(a) > self.MIN_LENGTH_CONCEPT
+                )
             ]
         return [Concept(c) for c in list(set(flat_words))]
-

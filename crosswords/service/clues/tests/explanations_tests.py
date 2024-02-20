@@ -9,7 +9,7 @@ from crosswords.llm.prompts.clues import CLUE_EXPLANATION
 
 
 def patch_get_explanation_from_llm(*args, **kwargs):
-    return "explanation_for_{word}".format(word=kwargs.get('word'))
+    return "explanation_for_{word}".format(word=kwargs.get("word"))
 
 
 class TestClueExplanationOperator(unittest.TestCase):
@@ -27,12 +27,17 @@ class TestClueExplanationOperator(unittest.TestCase):
         self.assertTrue("clue: Clue for inheritance word" in prompt)
         self.assertTrue("explanation:" in prompt)
 
-    @mock.patch('crosswords.llm.prompt_interface.PromptInterface.llm_execute', patch_get_explanation_from_llm)
+    @mock.patch(
+        "crosswords.llm.prompt_interface.PromptInterface.llm_execute",
+        patch_get_explanation_from_llm,
+    )
     def test_execute(self):
         generator = ClueExplanationOperator()
         clues = [Clue(self.word, self.clue)]
-        clues_with_explanations = asyncio.run(generator.execute([Clue(self.word, self.clue)]))
+        clues_with_explanations = asyncio.run(
+            generator.execute([Clue(self.word, self.clue)])
+        )
         self.assertEqual(
             [c.explanation for c in clues_with_explanations],
-            ["explanation_for_{}".format(clue.word) for clue in clues]
+            ["explanation_for_{}".format(clue.word) for clue in clues],
         )

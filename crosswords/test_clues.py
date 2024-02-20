@@ -12,7 +12,9 @@ clues_explanation_operator = ClueExplanationOperator()
 
 
 async def get_clues(concepts, title, section, tries=3):
-    clues = await clues_generator.execute(concepts, title=title, section=section, tries=tries)
+    clues = await clues_generator.execute(
+        concepts, title=title, section=section, tries=tries
+    )
     explainable_clues = await clues_explanation_operator.execute(clues)
     return explainable_clues
 
@@ -26,7 +28,7 @@ async def main():
     crosswords_factory = CrosswordFactory([Concept(c) for c in concepts])
     clues, best_crossword = await asyncio.gather(
         get_clues(concepts, title=title, section=section, tries=3),
-        crosswords_factory.generate_best_board()
+        crosswords_factory.generate_best_board(),
     )
     print()
     for clue in clues:

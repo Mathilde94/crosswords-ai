@@ -15,9 +15,13 @@ class Board:
         self.matrix = self.initialize_matrix()
 
     def initialize_matrix(self) -> List[List[str]]:
-        return [[self.EMPTY_CELL for _ in range(self.width)] for _ in range(self.height)]
+        return [
+            [self.EMPTY_CELL for _ in range(self.width)] for _ in range(self.height)
+        ]
 
-    def place_word(self, word: str, direction: Tuple[int, int], start: Tuple[int, int]) -> bool:
+    def place_word(
+        self, word: str, direction: Tuple[int, int], start: Tuple[int, int]
+    ) -> bool:
         """Place a word on the board"""
         if not self._can_place_word(word, direction, start):
             return False
@@ -29,7 +33,9 @@ class Board:
             y += dy
         return True
 
-    def _can_place_word(self, word: str, direction: Tuple[int, int], start: Tuple[int, int]) -> bool:
+    def _can_place_word(
+        self, word: str, direction: Tuple[int, int], start: Tuple[int, int]
+    ) -> bool:
         """Check if a word can be placed on the board"""
         x, y = start
         dx, dy = direction
@@ -37,9 +43,14 @@ class Board:
             if not self._is_valid_position(x, y):
                 return False
             # We can place a word if either the cell is empty or the cell is already filled with the same letter
-            if self.matrix[x][y] != self.EMPTY_CELL and self.matrix[x][y].strip() != letter:
+            if (
+                self.matrix[x][y] != self.EMPTY_CELL
+                and self.matrix[x][y].strip() != letter
+            ):
                 return False
-            if self.matrix[x][y].strip() != letter and not self._does_not_have_neighbors(x, y, direction):
+            if self.matrix[x][
+                y
+            ].strip() != letter and not self._does_not_have_neighbors(x, y, direction):
                 return False
             x += dx
             y += dy
@@ -48,7 +59,9 @@ class Board:
     def _is_valid_position(self, x: int, y: int) -> bool:
         return 0 <= x < self.height and 0 <= y < self.width
 
-    def _does_not_have_neighbors(self, x: int, y: int, direction: Tuple[int, int]) -> bool:
+    def _does_not_have_neighbors(
+        self, x: int, y: int, direction: Tuple[int, int]
+    ) -> bool:
         """Check if a cell does not have any neighbors"""
         if direction == HORIZONTAL_DIRECTION:
             # we want to place the word horizontally so we need to check the cells above and below
@@ -104,8 +117,4 @@ class Board:
         return output
 
     def serialize(self):
-        return {
-            "matrix": self.matrix,
-            "width": self.width,
-            "height": self.height
-        }
+        return {"matrix": self.matrix, "width": self.width, "height": self.height}

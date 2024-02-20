@@ -15,17 +15,15 @@ class Clue:
 
     def is_valid(self):
         return (
-                self.explanation != BAD_CLUE_EXPLANATION
-                and self.explanation != ""
-                and ("across" not in self.clue.lower() and "down" not in self.clue.lower())
+            self.explanation != BAD_CLUE_EXPLANATION
+            and self.explanation != ""
+            and ("across" not in self.clue.lower() and "down" not in self.clue.lower())
         )
 
     def __str__(self):
-        return "<Word: {}, Clue: {} (Explanation: {})>".format(self.word, self.clue, self.explanation)
+        return "<Word: {}, Clue: {} (Explanation: {})>".format(
+            self.word, self.clue, self.explanation
+        )
 
     def serialize(self):
-        return {
-            "word": self.word,
-            "clue": self.clue,
-            "explanation": self.explanation
-        }
+        return {"word": self.word, "clue": self.clue, "explanation": self.explanation}

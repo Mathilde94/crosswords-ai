@@ -24,7 +24,10 @@ class CrosswordBoard(Board):
         min_x, max_x, min_y, max_y = self.get_borders()
         super().trim_to(min_x, max_x, min_y, max_y)
         for word, (position, direction) in self.words_positions.items():
-            self.words_positions[word] = ((position[0] - min_x, position[1] - min_y), direction)
+            self.words_positions[word] = (
+                (position[0] - min_x, position[1] - min_y),
+                direction,
+            )
 
     def __str__(self):
         output = "Words: {words}.\n".format(words=self.words_positions)
@@ -32,7 +35,9 @@ class CrosswordBoard(Board):
 
     def __copy__(self):
         new_board = CrosswordBoard(self.width, self.height)
-        new_board.matrix = [[self.matrix[i][j] for j in range(self.width)] for i in range(self.height)]
+        new_board.matrix = [
+            [self.matrix[i][j] for j in range(self.width)] for i in range(self.height)
+        ]
         new_board.words_positions = self.words_positions.copy()
         return new_board
 

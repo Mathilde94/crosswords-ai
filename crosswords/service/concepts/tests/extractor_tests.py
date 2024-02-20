@@ -26,14 +26,21 @@ class TestConceptExtractor(unittest.TestCase):
 
     def test_prepare_prompt(self):
         generator = ConceptExtractor()
-        prompt = generator.prepare_prompt(title=self.title, section=self.section, extract=self.extracts)
+        prompt = generator.prepare_prompt(
+            title=self.title, section=self.section, extract=self.extracts
+        )
         self.assertTrue("title: {}".format(self.title) in prompt)
         self.assertTrue("section: {}".format(self.section) in prompt)
         self.assertTrue("extract: {}".format(self.extracts) in prompt)
 
-    @mock.patch('crosswords.llm.prompt_interface.PromptInterface.llm_execute', patch_get_concepts_from_llm)
+    @mock.patch(
+        "crosswords.llm.prompt_interface.PromptInterface.llm_execute",
+        patch_get_concepts_from_llm,
+    )
     def test_execute(self):
         generator = ConceptExtractor()
-        concepts = asyncio.run(generator.execute(self.title, self.section, self.extracts))
+        concepts = asyncio.run(
+            generator.execute(self.title, self.section, self.extracts)
+        )
         concepts.sort()
         self.assertEqual([c.word for c in concepts], CONCEPTS_TESTS)

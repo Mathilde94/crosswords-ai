@@ -18,6 +18,7 @@ log = logging.getLogger(__name__)
 
 class Executor(threading.Thread):
     """Simulating individual thread polling from a shared queue of tasks to process"""
+
     TIMEOUT_IN_SEC = 1
 
     def __init__(self, identifier, queue: queue.Queue = None):
@@ -35,7 +36,9 @@ class Executor(threading.Thread):
             self.queue.task_done()
 
     def process(self, crossword_id, tries):
-        log.info(f"Processing crossword_id: {crossword_id} (thread={threading.get_native_id()})")
+        log.info(
+            f"Processing crossword_id: {crossword_id} (thread={threading.get_native_id()})"
+        )
         self._generate(crossword_id, tries)
         log.info(f"Processing crossword_id completed: {crossword_id}")
 
@@ -45,7 +48,9 @@ class Executor(threading.Thread):
         context = crossword.context
 
         # First, generate the concepts
-        concepts = asyncio.run(concepts_extractor.execute(context.title, context.section, context.extracts))
+        concepts = asyncio.run(
+            concepts_extractor.execute(context.title, context.section, context.extracts)
+        )
         if len(concepts) == 0:
             log.warning(f"No concepts found for crossword_id: {crossword_id}")
             return
@@ -54,7 +59,11 @@ class Executor(threading.Thread):
         # Then generate the clues
         crosswords_factory = CrosswordFactory(concepts)
 
-        clues = asyncio.run(self._get_valid_clues(concepts, title=context.title, section=context.section, tries=tries))
+        clues = asyncio.run(
+            self._get_valid_clues(
+                concepts, title=context.title, section=context.section, tries=tries
+            )
+        )
 
         # Then generate the board
         best_crossword = asyncio.run(crosswords_factory.generate_best_board())
@@ -69,6 +78,8 @@ class Executor(threading.Thread):
         return crossword.serialize()
 
     async def _get_valid_clues(self, concepts, title, section, tries=3):
-        clues = await clues_generator.execute(concepts, title=title, section=section, tries=tries)
+        clues = await clues_generator.execute(
+            concepts, title=title, section=section, tries=tries
+        )
         explainable_clues = await clues_explanation_operator.execute(clues)
         return list(filter(lambda c: c.is_valid(), explainable_clues))

@@ -17,13 +17,13 @@ class Status(enum.Enum):
 
 class Crossword:
     def __init__(
-            self,
-            context: CrosswordContext,
-            id: str = None,
-            status: Status = Status.CREATED,
-            clues: List[Clue] = None,
-            board: CrosswordBoard = CrosswordBoard(),
-            concepts: List[Concept] = None,
+        self,
+        context: CrosswordContext,
+        id: str = None,
+        status: Status = Status.CREATED,
+        clues: List[Clue] = None,
+        board: CrosswordBoard = CrosswordBoard(),
+        concepts: List[Concept] = None,
     ):
         self.id = id or None
         self.context = context
@@ -49,7 +49,7 @@ class Crossword:
         return {
             "id": self.id,
             "status": self.status.value,  # default to "created" if status is not set
-            'concepts': [concept.serialize() for concept in self.concepts],
+            "concepts": [concept.serialize() for concept in self.concepts],
             "clues": [clue.serialize() for clue in self.clues],
             "board": self.board.serialize(),
             "context": self.context.serialize(),
@@ -58,12 +58,12 @@ class Crossword:
     @staticmethod
     def from_serialized(data: dict):
         return Crossword(
-            id=data['id'],
-            status=Status(data['status']),
-            context=CrosswordContext.from_serialized(data['context']),
-            clues=[Clue(**clue) for clue in data['clues']],
-            board=CrosswordBoard.from_serialized(data['board']),
-            concepts=[Concept(**concept) for concept in data['concepts']]
+            id=data["id"],
+            status=Status(data["status"]),
+            context=CrosswordContext.from_serialized(data["context"]),
+            clues=[Clue(**clue) for clue in data["clues"]],
+            board=CrosswordBoard.from_serialized(data["board"]),
+            concepts=[Concept(**concept) for concept in data["concepts"]],
         )
 
     @staticmethod

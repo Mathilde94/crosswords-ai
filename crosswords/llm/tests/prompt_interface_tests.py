@@ -13,7 +13,9 @@ class TestPromptInterface(unittest.TestCase):
         llm_interface = prompt_interface.llm_interface
         self.assertTrue(llm_interface.url, LLAMA_FINETUNED_SERVER)
 
-    @mock.patch('crosswords.llm.interface.LLMInterface.make_call', return_value="response")
+    @mock.patch(
+        "crosswords.llm.interface.LLMInterface.make_call", return_value="response"
+    )
     def test_llm_execute(self, mock_make_call):
         prompt_interface = PromptInterface()
         response = prompt_interface.llm_execute(new_tokens=3, t=0.5)
