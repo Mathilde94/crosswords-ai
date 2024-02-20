@@ -23,12 +23,15 @@ from any content, generating a small crossword puzzle.
 
 ### Crosswords generation
 A few modules in the crosswords domain:
-- `concepts` to extract concepts/words from any text content
-- `clues` to model clues from words, generate clues from concept in a context, and generate explanations (to filter out weird clues generated still)
-- `board` to generate a crossword board from a list of words, using a big grid, iterating over the words, trying to intersect and place them, then trimming them. I select the best crosswords from the number of words eventually placed and the best density. 
+- `models` that contain the crossword board, clues, context and concept models
+- `service` that contains the main logic to generate a crossword:
+  - `concepts` to extract concepts/words from any text content
+  - `clues` to generate clues and their explanations from a concept word in a context
+  - `tasks` for the background tasks that creates the crosswords
+- `llm` that contains the logic to integrate with a background LLM and all the prompts directory
 
 ### API server and frontend
-- FastAPI <TODO>
+- FastAPI under `controllers` that contain the main APIs routers
 - Webpack <TODO>
 
 ## How to run
@@ -113,5 +116,7 @@ c o n d i t i o n a l
 ### Developing
 
 - To run python tests: `python -m unittest crosswords/**/*.py`
-- Running coverage: `coverage run -m unittest crosswords/**/*.py` and then `coverage report -m`
+- Running coverage: 
+  - `coverage run -m unittest crosswords/**/*.py`
+  - `coverage report -m`
 - Formatting: `python -m black crosswords`
