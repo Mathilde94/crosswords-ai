@@ -2,7 +2,7 @@ from typing import List
 
 from crosswords.llm.prompt_interface import PromptInterface
 from crosswords.service.concepts.prompts.constants import EXTRACT_CONCEPTS
-from crosswords.models.concepts import Concept
+from crosswords.models.concept import Concept
 
 
 class ConceptExtractor(PromptInterface):

@@ -2,8 +2,8 @@ from typing import List
 
 from crosswords.llm.prompt_interface import PromptInterface
 
-from crosswords.models.clues import Clue
-from crosswords.models.concepts import Concept
+from crosswords.models.clue import Clue
+from crosswords.models.concept import Concept
 from crosswords.service.clues.prompts.constants import CONTENT_CONTEXT, GET_CLUE_FOR_WORD_IN_CONTEXT_TEMPLATE
 
 

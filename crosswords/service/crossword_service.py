@@ -1,7 +1,7 @@
 import threading
 
 from crosswords.models.context import CrosswordContext
-from crosswords.models.crosswords import Crossword
+from crosswords.models.crossword import Crossword
 
 
 class CrosswordService:

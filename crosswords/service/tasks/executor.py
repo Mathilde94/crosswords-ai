@@ -3,11 +3,11 @@ import logging
 import threading
 import queue
 
-from crosswords.models.crosswords import Crossword, Status
-from crosswords.models.board.factory import CrosswordFactory
+from crosswords.models.crossword import Crossword, Status
 from crosswords.service.concepts.extractor import ConceptExtractor
 from crosswords.service.clues.generator import ClueGenerator
 from crosswords.service.clues.explanations import ClueExplanationOperator
+from crosswords.service.tasks.factory import CrosswordFactory
 
 concepts_extractor = ConceptExtractor()
 clues_generator = ClueGenerator()
@@ -57,7 +57,7 @@ class Executor(threading.Thread):
         clues = asyncio.run(self._get_valid_clues(concepts, title=context.title, section=context.section, tries=tries))
 
         # Then generate the board
-        best_crossword = asyncio.run(crosswords_factory.generate_boards())
+        best_crossword = asyncio.run(crosswords_factory.generate_best_board())
 
         crossword.set_clues(clues)
         crossword.set_board(best_crossword)

@@ -1,7 +1,7 @@
 from typing import List
 
 from crosswords.llm.prompt_interface import PromptInterface
-from crosswords.models.clues import Clue
+from crosswords.models.clue import Clue
 from crosswords.service.clues.prompts.constants import CLUE_EXPLANATION
 
 

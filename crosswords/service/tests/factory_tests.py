@@ -2,7 +2,7 @@ import asyncio
 import unittest
 
 from crosswords.models.board.exceptions import TooManyWordsError
-from crosswords.models.board.factory import CrosswordFactory
+from crosswords.service.tasks.factory import CrosswordFactory
 
 
 class TestFactory(unittest.TestCase):
@@ -21,7 +21,7 @@ class TestFactory(unittest.TestCase):
 
     def test_generate_boards(self):
         factory = CrosswordFactory.from_words(["word", "another", "one"])
-        best_crossword = asyncio.run(factory.generate_boards())
+        best_crossword = asyncio.run(factory.generate_best_board())
         self.assertEqual(len(factory.crosswords), 8)
         self.assertEqual(len(factory.best_crosswords), 3)
         self.assertEqual(len(best_crossword.words_positions), 3)
@@ -31,6 +31,6 @@ class TestFactory(unittest.TestCase):
 
     def test_generate_boards_missing_word(self):
         factory = CrosswordFactory.from_words(["word", "another", "one", "missig"])
-        best_crossword = asyncio.run(factory.generate_boards())
+        best_crossword = asyncio.run(factory.generate_best_board())
         self.assertEqual(len(factory.crosswords), 8)
         self.assertEqual(len(best_crossword.words_positions), 3)

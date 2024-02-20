@@ -1,7 +1,7 @@
 import asyncio
 
-from crosswords.models.concepts import Concept
-from crosswords.models.board.factory import CrosswordFactory
+from crosswords.models.concept import Concept
+from crosswords.service.tasks.factory import CrosswordFactory
 from crosswords.service.concepts.extractor import ConceptExtractor
 from crosswords.service.clues.generator import ClueGenerator
 from crosswords.service.clues.explanations import ClueExplanationOperator
@@ -26,7 +26,7 @@ async def main():
     crosswords_factory = CrosswordFactory([Concept(c) for c in concepts])
     clues, best_crossword = await asyncio.gather(
         get_clues(concepts, title=title, section=section, tries=3),
-        crosswords_factory.generate_boards()
+        crosswords_factory.generate_best_board()
     )
     print()
     for clue in clues:

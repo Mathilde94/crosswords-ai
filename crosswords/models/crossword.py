@@ -4,8 +4,8 @@ from typing import List
 
 from crosswords.models.context import CrosswordContext
 from crosswords.models.board.crossword_board import CrosswordBoard
-from crosswords.models.clues import Clue
-from crosswords.models.concepts import Concept
+from crosswords.models.clue import Clue
+from crosswords.models.concept import Concept
 from crosswords.repository.crosswords import crossword_repository
 
 

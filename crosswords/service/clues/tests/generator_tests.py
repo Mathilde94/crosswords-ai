@@ -3,6 +3,7 @@ import unittest
 
 from unittest import mock
 
+from crosswords.models.concept import Concept
 from crosswords.service.clues.generator import ClueGenerator
 from crosswords.service.clues.prompts.constants import GET_CLUE_FOR_WORD_IN_CONTEXT_TEMPLATE
 
@@ -15,7 +16,7 @@ class TestClueGenerator(unittest.TestCase):
     word = "inheritance"
     title = "Python for intermediate"
     section = "Object Oriented Programming"
-    concepts = ["inheritance", "super", "composition", "class", "attributes"]
+    concepts = [Concept(c) for c in ["inheritance", "super", "composition", "class", "attributes"]]
 
     def test_initialization(self):
         generator = ClueGenerator()
@@ -32,4 +33,4 @@ class TestClueGenerator(unittest.TestCase):
     def test_execute(self):
         generator = ClueGenerator()
         clues = asyncio.run(generator.execute(self.concepts, self.title, self.section))
-        self.assertEqual([c.clue for c in clues], ["clue_for_{}".format(concept) for concept in self.concepts])
+        self.assertEqual([c.clue for c in clues], ["clue_for_{}".format(concept.word) for concept in self.concepts])

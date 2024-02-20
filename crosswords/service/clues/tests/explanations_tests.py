@@ -4,7 +4,7 @@ import unittest
 from unittest import mock
 
 from crosswords.service.clues.explanations import ClueExplanationOperator
-from crosswords.models.clues import Clue
+from crosswords.models.clue import Clue
 from crosswords.service.clues.prompts.constants import CLUE_EXPLANATION
 
 
