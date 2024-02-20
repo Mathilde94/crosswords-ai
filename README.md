@@ -34,94 +34,11 @@ A few modules in the crosswords domain:
 - FastAPI under `controllers` that contain the main APIs routers
 - Webpack <TODO>
 
-## How to run
+## How to
 
 ### Fine-tuning LLama13b
-- Create an AWS role `Sagemaker_deploy_training_role`
-- Make sure you have quota to run `ml.g5.24xlarge` instances, needed for fine-tuning llama 13b
-- Go to the `fine_tuning` directory
-- Run `python main.py`, monitor the progress. It should take about 1h to fine-tune the model
-
-To run the inference model:
-- clone `https://github.com/ggerganov/llama.cpp` and go to `llama.cpp` directory
-- download the fine-tuned model files in S3: they should be in a S3 bucket that looks like that:
-  - `sagemaker-us-west-2-<id> / meta-textgeneration-llama-2-13b-<date-format>/output/model`
-![s3_model_generated_files.png](images%2Fs3_model_generated_files.png)
-  - place them in the `models/13B-invent-clue` directory
-  - the main files needed: `*.safetensors`, `tokenizer.model`, `tokenizer_config.json`, `special_tokens_map.json`, `config.json`, `generation_config.json`
-- Follow the steps to convert this model in llama.cpp:
-  - `python3 convert.py models/13B-invent-clue`
-  - `./quantize ./models/13B-invent-clue/ggml-model-f16.gguf ./models/13B-invent-clue/ggml-model-Q4_K_M.gguf Q4_K_M`
-  - `./quantize ./models/13B-invent-clue/ggml-model-Q4_K_M.gguf ./models/13B-invent-clue/ggml-model-Q4_K_M-v2.gguf COPY`
-
-Then you can run the inference that way:
-```shell
-./server -m models/13B-invent-clue/ggml-model-Q4_K_M.gguf -c 2048
-```
+Please check the readme under `fine_tuning` for more details on fine tuning steps and how to run locally 
+the fine-tuned inference model.
 
 ### Running server
-
-To run the environment:
-```shell
-# If using pyenv: 
-pyenv install 3.11.5
-pyenv global 3.11.5
-
-# Create virtualenv
-python -m venv ~/.virtualenvs/crosswords_ai
-source ~/.virtualenvs/crosswords_ai/bin/activate
-pip install -r requirements.txt
-```
-
-Run docker-compose to run Redis:
-```shell
-docker-compose up -d
-```
-
-To run the server:
-```shell
-uvicorn crosswords.main:app --reload
-```
-
-Then go to: http://0.0.0.0:8000/docs#/default and test `POST` and `GET` endpoints.
-
-![crossword_post.png](images/crosswords_post.png)
-![crossword_get.png](images/crossword_get.png)
-
-Running file `test_clues` for an individual crossword should return something like this:
-```python 
-Concepts ['else', 'instruction', 'conditional', 'debug', 'function']
-
-<Word: else, Clue: "If not, then ..." (Explanation: else is a synonym of otherwise)>
-<Word: else, Clue: "In case" (Explanation: else is a synonym of in case)>
-<Word: instruction, Clue: "Tell me what to do!" (Explanation: An instruction is an instruction to guess for a clue)>
-<Word: instruction, Clue: What a recipe is (Explanation: Instruction is a clue for it)>
-<Word: conditional, Clue: Like a "if" statement in programming (Explanation: The word to guess is "if")>
-<Word: conditional, Clue: ___ statement (Explanation: Conditional is a type of statement)>
-<Word: debug, Clue: Test out, as a program (Explanation: Debug is a synonym of test out)>
-<Word: debug, Clue: Find and fix a bug (Explanation: Debug is a verb which means to find and fix a bug)>
-<Word: debug, Clue: Test a program (Explanation: Debug is to test a program, as in "debug a new app")>
-<Word: function, Clue: Word with code (Explanation: function is a clue for it)>
-
-Best Crossword Words: {'else': ((2, 4), (0, 1)), 'instruction': ((0, 6), (1, 0)), 'conditional': ((0, 0), (0, 1)), 'debug': ((1, 4), (1, 0)), 'function': ((7, 2), (0, 1))}.
-Density: 0.2892561983471074
-c o n d i t i o n a l 
-. . . . d . n . . . . 
-. . . . e l s e . . . 
-. . . . b . t . . . . 
-. . . . u . r . . . . 
-. . . . g . u . . . . 
-. . . . . . c . . . . 
-. . f u n c t i o n . 
-. . . . . . i . . . . 
-. . . . . . o . . . . 
-. . . . . . n . . . . 
-```
-
-### Developing
-
-- To run python tests: `python -m unittest crosswords/**/*.py`
-- Running coverage: 
-  - `coverage run -m unittest crosswords/**/*.py`
-  - `coverage report -m`
-- Formatting: `python -m black crosswords`
+To run and/or develop on the crosswords FastAPI server, please check the readme under `crosswords`.

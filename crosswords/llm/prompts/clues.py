@@ -65,11 +65,6 @@ word: IRS
 clue: "Tax agcy."
 explanation: IRS is an abbreviation for Internal Revenue Service which is the government tax agency
 
-Example:
-word: else
-clue: Otherwise
-explanation: else is a synonym of otherwise
-
 Example: 
 word: enigma
 clue: "___ code"
