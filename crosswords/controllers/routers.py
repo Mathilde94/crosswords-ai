@@ -1,19 +1,21 @@
 from fastapi import APIRouter, BackgroundTasks, HTTPException, status
 
-from crosswords.models.context import CrosswordContext
 from crosswords.service.crossword_service import CrosswordService
 from crosswords.service.tasks.tasks import generate_crossword_task
 
+from .crossword_request import CrosswordRequest
 
 crosswords_router = APIRouter(prefix="/crosswords")
 
 
 @crosswords_router.post("/", status_code=status.HTTP_201_CREATED)
 async def create(
-    crossword_request: CrosswordContext, background_tasks: BackgroundTasks
+    crossword_request: CrosswordRequest, background_tasks: BackgroundTasks
 ):
-    new_crossword = CrosswordService.create_crossword(crossword_request)
-    background_tasks.add_task(generate_crossword_task, new_crossword.id)
+    new_crossword = CrosswordService.create_crossword(
+        crossword_request.context, crossword_request.concepts
+    )
+    background_tasks.add_task(generate_crossword_task, new_crossword.id, tries=2)
     return new_crossword.serialize()
 
 

@@ -33,7 +33,6 @@ Bad example:
 word: SHE
 clue: "___ in the rain"
 
-Your turn with this context:
 {context}
 
 Input:
@@ -42,7 +41,7 @@ Provide a clue for it:
 
 Response:"""
 
-CONTENT_CONTEXT = """This word was found in a document where:
+CONTENT_CONTEXT = """The word below for the task was found in a document where:
 title: {title}
 section: {section}
 other words in the document context: {concepts}

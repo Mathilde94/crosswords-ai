@@ -1,14 +1,17 @@
-import threading
+from typing import List
 
+from crosswords.models.concept import Concept
 from crosswords.models.context import CrosswordContext
-from crosswords.models.crossword import Crossword
+from crosswords.models.crossword import Crossword, CrosswordBuilder
 
 
 class CrosswordService:
 
     @staticmethod
-    def create_crossword(context: CrosswordContext) -> Crossword:
-        crossword = Crossword.from_context(context)
+    def create_crossword(context: CrosswordContext, concepts: List[str]) -> Crossword:
+        crossword_builder = CrosswordBuilder(context)
+        crossword_builder.add_concepts([Concept(c) for c in concepts])
+        crossword = crossword_builder.build()
         crossword.create()
         return crossword
 

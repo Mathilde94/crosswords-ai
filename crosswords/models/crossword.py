@@ -88,3 +88,15 @@ class Crossword:
     @staticmethod
     def from_context(context: CrosswordContext):
         return Crossword(context)
+
+
+class CrosswordBuilder:
+    def __init__(self, context: CrosswordContext):
+        self.context = context
+        self.concepts: List[Concept] = []
+
+    def add_concepts(self, concepts: List[Concept]):
+        self.concepts += concepts
+
+    def build(self):
+        return Crossword(self.context, concepts=self.concepts)

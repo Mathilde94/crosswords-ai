@@ -20,9 +20,13 @@ class ClueGenerator(PromptInterface):
         section: str = "",
         concepts: List[Concept] = None,
     ) -> str:
-        context = CONTENT_CONTEXT.format(
-            title=title, section=section, concepts=", ".join([c.word for c in concepts])
-        )
+        context = ""
+        if title and section and concepts:
+            context = CONTENT_CONTEXT.format(
+                title=title,
+                section=section,
+                concepts=", ".join([c.word for c in concepts]),
+            )
         return self.template.format(word=word.upper(), context=context)
 
     async def execute(

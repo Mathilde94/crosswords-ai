@@ -48,20 +48,26 @@ class Executor(threading.Thread):
         context = crossword.context
 
         # First, generate the concepts
-        concepts = asyncio.run(
-            concepts_extractor.execute(context.title, context.section, context.extracts)
-        )
-        if len(concepts) == 0:
-            log.warning(f"No concepts found for crossword_id: {crossword_id}")
-            return
-        crossword.set_concepts(concepts)
+        if len(crossword.concepts) == 0:
+            concepts = asyncio.run(
+                concepts_extractor.execute(
+                    context.title, context.section, context.extracts
+                )
+            )
+            if len(concepts) == 0:
+                log.warning(f"No concepts found for crossword_id: {crossword_id}")
+                return
+            crossword.set_concepts(concepts)
 
         # Then generate the clues
-        crosswords_factory = CrosswordFactory(concepts)
+        crosswords_factory = CrosswordFactory(crossword.concepts)
 
         clues = asyncio.run(
             self._get_valid_clues(
-                concepts, title=context.title, section=context.section, tries=tries
+                crossword.concepts,
+                title=context.title,
+                section=context.section,
+                tries=tries,
             )
         )
 
