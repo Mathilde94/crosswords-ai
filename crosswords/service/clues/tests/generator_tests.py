@@ -3,8 +3,8 @@ import unittest
 
 from unittest import mock
 
-from crosswords.clues.generator import ClueGenerator
-from crosswords.clues.prompts.constants import GET_CLUE_FOR_WORD_IN_CONTEXT_TEMPLATE
+from crosswords.service.clues.generator import ClueGenerator
+from crosswords.service.clues.prompts.constants import GET_CLUE_FOR_WORD_IN_CONTEXT_TEMPLATE
 
 
 def patch_get_clue_from_llm(*args, **kwargs):

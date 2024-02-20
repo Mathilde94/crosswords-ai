@@ -71,3 +71,15 @@ class CrosswordBoard(Board):
         new_board.matrix = [[self.matrix[i][j] for j in range(self.width)] for i in range(self.height)]
         new_board.words_positions = self.words_positions.copy()
         return new_board
+
+    def serialize(self):
+        data = super().serialize()
+        data["words_position"] = self.words_positions
+        return data
+
+    @staticmethod
+    def from_serialized(data: dict) -> CrosswordBoard:
+        board = CrosswordBoard(data["width"], data["height"])
+        board.matrix = data["matrix"]
+        board.words_positions = data["words_position"]
+        return board

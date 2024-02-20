@@ -1,6 +1,6 @@
 import unittest
 
-from crosswords.board.crossword import CrosswordBoard
+from crosswords.models.board.crossword_board import CrosswordBoard
 
 
 class TestCrossword(unittest.TestCase):

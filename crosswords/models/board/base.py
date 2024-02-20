@@ -102,3 +102,10 @@ class Board:
                 output += self.matrix[i][j]
             output += "\n"
         return output
+
+    def serialize(self):
+        return {
+            "matrix": self.matrix,
+            "width": self.width,
+            "height": self.height
+        }

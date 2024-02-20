@@ -1,4 +1,4 @@
-from crosswords.clues.prompts.constants import BAD_CLUE_EXPLANATION
+from crosswords.service.clues.prompts.constants import BAD_CLUE_EXPLANATION
 
 
 class Clue:
@@ -14,14 +14,17 @@ class Clue:
         self.explanation = explanation
 
     def is_valid(self):
-        return self.explanation != BAD_CLUE_EXPLANATION and self.explanation != ""
+        return (
+                self.explanation != BAD_CLUE_EXPLANATION
+                and self.explanation != ""
+                and ("across" not in self.clue.lower() and "down" not in self.clue.lower())
+        )
 
     def __str__(self):
         return "<Word: {}, Clue: {} (Explanation: {})>".format(self.word, self.clue, self.explanation)
 
-    def as_dict(self):
+    def serialize(self):
         return {
-            "type": "__clue__",
             "word": self.word,
             "clue": self.clue,
             "explanation": self.explanation

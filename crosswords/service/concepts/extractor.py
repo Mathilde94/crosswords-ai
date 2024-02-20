@@ -1,5 +1,8 @@
+from typing import List
+
 from crosswords.llm.prompt_interface import PromptInterface
-from crosswords.concepts.prompts.constants import EXTRACT_CONCEPTS
+from crosswords.service.concepts.prompts.constants import EXTRACT_CONCEPTS
+from crosswords.models.concepts import Concept
 
 
 class ConceptExtractor(PromptInterface):
@@ -7,7 +10,7 @@ class ConceptExtractor(PromptInterface):
     MIN_LENGTH_CONCEPT = 2
     template = EXTRACT_CONCEPTS
 
-    async def execute(self, title: str, section: str, extracts: str):
+    async def execute(self, title: str, section: str, extracts: str) -> List[Concept]:
         words = []
         for extract in extracts.split("\n"):
             w = self.llm_execute(title=title, section=section, extract=extract)
@@ -19,7 +22,7 @@ class ConceptExtractor(PromptInterface):
         for w in words:
             flat_words += [
                 a.strip() for a in w.split(" ")
-                if (a != "" and self.MAX_LENGTH_CONCEPT > len(a) >= self.MIN_LENGTH_CONCEPT)
+                if (a != "" and self.MAX_LENGTH_CONCEPT > len(a) > self.MIN_LENGTH_CONCEPT)
             ]
-        return list(set(flat_words))
+        return [Concept(c) for c in list(set(flat_words))]
 

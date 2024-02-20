@@ -1,8 +1,8 @@
 from typing import List
 
 from crosswords.llm.prompt_interface import PromptInterface
-from crosswords.clues.models import Clue
-from crosswords.clues.prompts.constants import CLUE_EXPLANATION
+from crosswords.models.clues import Clue
+from crosswords.service.clues.prompts.constants import CLUE_EXPLANATION
 
 
 class ClueExplanationOperator(PromptInterface):
@@ -11,4 +11,4 @@ class ClueExplanationOperator(PromptInterface):
     async def execute(self, clues: List[Clue]) -> List[Clue]:
         for clue in clues:
             clue.set_explanation(self.llm_execute(word=clue.word, clue=clue.clue))
-        return filter(lambda c: c.is_valid(), clues)
+        return clues

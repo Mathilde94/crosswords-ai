@@ -3,9 +3,9 @@ import unittest
 
 from unittest import mock
 
-from crosswords.clues.explanations import ClueExplanationOperator
-from crosswords.clues.models import Clue
-from crosswords.clues.prompts.constants import CLUE_EXPLANATION
+from crosswords.service.clues.explanations import ClueExplanationOperator
+from crosswords.models.clues import Clue
+from crosswords.service.clues.prompts.constants import CLUE_EXPLANATION
 
 
 def patch_get_explanation_from_llm(*args, **kwargs):

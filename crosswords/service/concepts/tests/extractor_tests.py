@@ -3,8 +3,8 @@ import unittest
 
 from unittest import mock
 
-from crosswords.concepts.extractor import ConceptExtractor
-from crosswords.concepts.prompts.constants import EXTRACT_CONCEPTS
+from crosswords.service.concepts.extractor import ConceptExtractor
+from crosswords.service.concepts.prompts.constants import EXTRACT_CONCEPTS
 
 
 CONCEPTS_TESTS = ["attributes", "class", "composition", "object"]
@@ -36,4 +36,4 @@ class TestConceptExtractor(unittest.TestCase):
         generator = ConceptExtractor()
         concepts = asyncio.run(generator.execute(self.title, self.section, self.extracts))
         concepts.sort()
-        self.assertEqual(concepts, CONCEPTS_TESTS)
+        self.assertEqual([c.word for c in concepts], CONCEPTS_TESTS)
