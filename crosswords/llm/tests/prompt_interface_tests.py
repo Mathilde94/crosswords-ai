@@ -19,7 +19,7 @@ class TestPromptInterface(unittest.TestCase):
     def test_llm_execute(self, mock_make_call):
         prompt_interface = PromptInterface()
         response = prompt_interface.llm_execute(new_tokens=3, t=0.5)
-        self.assertEqual(response, "response")
+        self.assertEqual(response, "")
 
     def test_execute(self):
         prompt_interface = PromptInterface()

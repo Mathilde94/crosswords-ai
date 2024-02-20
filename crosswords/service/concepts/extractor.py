@@ -5,6 +5,8 @@ from crosswords.llm.prompts.concepts import EXTRACT_CONCEPTS
 from crosswords.models.concept import Concept
 from crosswords.service.concepts.extract_strategy import SimpleParagraphExtractStrategy
 
+from .constants import MOCKED_CONCEPTS
+
 
 class ConceptExtractor(PromptInterface):
     MAX_LENGTH_CONCEPT = 20
@@ -12,6 +14,8 @@ class ConceptExtractor(PromptInterface):
 
     template = EXTRACT_CONCEPTS
     extracts_strategy = SimpleParagraphExtractStrategy()
+
+    MOCKED_RESPONSE = MOCKED_CONCEPTS
 
     async def execute(self, title: str, section: str, extracts: str) -> List[Concept]:
         words = []

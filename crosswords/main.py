@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 from crosswords.controllers.routers import routers
+from dotenv import load_dotenv
 
+
+load_dotenv()
 app = FastAPI()
 
 for router in routers:

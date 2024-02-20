@@ -21,7 +21,6 @@ class CrosswordService:
         crossword = Crossword.get_from_db(crossword_id)
         return crossword.verify(matrix)
 
-
     @staticmethod
     def get_crossword(crossword_id: str) -> Crossword:
         serialized_crossword = Crossword.get_from_db(crossword_id)

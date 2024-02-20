@@ -9,9 +9,12 @@ from crosswords.llm.prompts.clues import (
 from crosswords.models.clue import Clue
 from crosswords.models.concept import Concept
 
+from .constants import MOCKED_CLUE
+
 
 class ClueGenerator(PromptInterface):
     template = GET_CLUE_FOR_WORD_IN_CONTEXT_TEMPLATE
+    MOCKED_RESPONSE = MOCKED_CLUE
 
     def prepare_prompt(
         self,

@@ -17,7 +17,7 @@ class CrosswordRepository:
     def create(self) -> str:
         return str(uuid.uuid4()).replace("-", "")
 
-    def build_key(self, crossword_id: str):
+    def build_key(self, crossword_id: str) -> str:
         return f"{self.namespace}{crossword_id}"
 
     def save(self, crossword_id: str, serialized_crossword: dict):

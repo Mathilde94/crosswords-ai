@@ -1,6 +1,12 @@
 # FastAPI Server
 
 ## Setup
+Note: You can also run all the backend API server and frontend with mocked data if you set up the following 
+environment variable in the `.env` file:
+```shell
+MOCK_DATA=1
+```
+This can help if you dont have the LLM set up locally and want to test the rest.
 
 ```shell
 # If using pyenv: 
