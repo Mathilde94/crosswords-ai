@@ -85,9 +85,8 @@ class Crossword:
     def delete(self):
         crossword_repository.delete(self.id)
 
-    @staticmethod
-    def from_context(context: CrosswordContext):
-        return Crossword(context)
+    def verify(self, matrix: List[List[str]]):
+        return self.board.verify(matrix)
 
 
 class CrosswordBuilder:

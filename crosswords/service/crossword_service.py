@@ -17,6 +17,12 @@ class CrosswordService:
         return crossword
 
     @staticmethod
+    def verify_crossword(crossword_id: str, matrix: List[List[str]]) -> bool:
+        crossword = Crossword.get_from_db(crossword_id)
+        return crossword.verify(matrix)
+
+
+    @staticmethod
     def get_crossword(crossword_id: str) -> Crossword:
         serialized_crossword = Crossword.get_from_db(crossword_id)
         return serialized_crossword

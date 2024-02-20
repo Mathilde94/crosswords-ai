@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import List
 
 from .base import Board
 
@@ -52,3 +53,6 @@ class CrosswordBoard(Board):
         board.matrix = data["matrix"]
         board.words_positions = data["words_position"]
         return board
+
+    def verify(self, matrix: List[List[str]]) -> bool:
+        return self.matrix == matrix
