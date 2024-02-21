@@ -1,12 +1,20 @@
-import _ from 'lodash';
+import './style.css';
+import { createRoot } from 'react-dom/client';
+import CrosswordReactComponent from './crossword/crossword.react-component';
 
-function component() {
-    const element = document.createElement('div');
-
-    // Lodash, now imported by this script
-    element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-
+function reactMountElement() {
+    const element = document.createElement('main');
+    element.id = 'root';
     return element;
 }
 
-document.body.appendChild(component());
+function App() {
+    return (
+        <div>
+            <CrosswordReactComponent />
+        </div>
+    );}
+
+document.body.appendChild(reactMountElement());
+const root = createRoot(document.getElementById('root'));
+root.render(<App />);
