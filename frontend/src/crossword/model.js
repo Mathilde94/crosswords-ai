@@ -28,7 +28,7 @@ export default class Crossword {
         const initialPosition = clue.position
         const direction = clue.position.direction
         let path = []
-        for (let index = 0; index <= clue.length; index ++) {
+        for (let index = 0; index < clue.length; index ++) {
             path = path.concat([
                 new Position({
                     row: initialPosition.row + index * direction[0],
