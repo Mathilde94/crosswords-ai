@@ -2,7 +2,7 @@ import axios from "axios";
 import {runInAction, observable, action} from 'mobx';
 
 import {API_HOST_URL} from './constants'
-import Crossword from "./model";
+import Crossword, {Clue, Position} from "./model";
 
 export default class CrosswordStore {
     @observable accessor isLoaded = false;
@@ -22,21 +22,29 @@ export default class CrosswordStore {
                 }
             }
         );
-        // need to fetch unique clue
-        const clues = {}
+        // need to fetch unique clues
+        const uniqueClues = {}
+        let allClues = []
         data.data.clues.forEach((clue) => {
-            if (clues[clue.word] === undefined) {
-                clues[clue.word] = clue.clue
+            if (uniqueClues[clue.clue] === undefined) {
+                uniqueClues[clue.clue] = clue.clue
+                allClues = allClues.concat([new Clue({
+                    clue: clue.clue,
+                    position: new Position({
+                        row: data.data.board.words_position[clue.word][0][0],
+                        column: data.data.board.words_position[clue.word][0][1],
+                        direction: data.data.board.words_position[clue.word][1],
+                    }),
+                    length: clue.word.length,
+                    // TODO: remove later
+                    content: clue.word
+                })])
             }
         });
+
         runInAction(() => {
             this.isLoaded = true;
-            this.crossword = new Crossword(
-                this.crosswordId,
-                data.data.board.matrix,
-                clues,
-                data.data.board.words_position
-            );
+            this.crossword = new Crossword(data.data.board.matrix, allClues);
         });
     }
 }
