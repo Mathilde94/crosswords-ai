@@ -32,6 +32,10 @@ class Executor(threading.Thread):
                 crossword_id, tries = self.queue.get(timeout=self.TIMEOUT_IN_SEC)
             except queue.Empty:
                 continue
+            except KeyboardInterrupt:
+                print("Stopping thread:", self.identifier)
+                return
+
             self.process(crossword_id, tries)
             self.queue.task_done()
 

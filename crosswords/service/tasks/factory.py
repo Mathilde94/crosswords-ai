@@ -21,7 +21,7 @@ class CrosswordFactory:
     TOP_CROSSWORDS = 3
     LIMIT_CONCEPTS_WORDS = 10
 
-    def __init__(self, concepts: List[Concept], width=20, height=20):
+    def __init__(self, concepts: List[Concept], width=50, height=50):
         if len(concepts) > self.LIMIT_CONCEPTS_WORDS:
             raise TooManyWordsError("Please provide less than 10 words")
         self.concepts = concepts
