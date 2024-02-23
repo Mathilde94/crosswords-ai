@@ -17,9 +17,10 @@ export class Clue {
 }
 
 export default class Crossword {
-    constructor(matrix, clues) {
+    constructor(matrix, clues, id) {
         this.matrix = matrix;
         this.clues = clues;
+        this.id = id
     }
 
     fetchPositionsForClue(clueIndex) {
