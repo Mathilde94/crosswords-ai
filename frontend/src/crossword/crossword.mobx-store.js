@@ -7,6 +7,7 @@ import Crossword, {Clue, Position} from "./model";
 export default class CrosswordStore {
     @observable accessor isLoaded = false;
     @observable accessor crossword = null;
+    @observable accessor state = "init";
 
     constructor(crosswordId ) {
         this.crosswordId = crosswordId;
@@ -71,6 +72,9 @@ export default class CrosswordStore {
 
     @action
     async createNewCrossword() {
+        runInAction(() => {
+            this.state = "loading"
+        });
         const data = await axios.post(
             `${API_HOST_URL}/crosswords/feeling_lucky/`,
             {

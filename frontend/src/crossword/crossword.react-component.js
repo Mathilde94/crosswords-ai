@@ -31,8 +31,15 @@ export default class CrosswordReactComponent extends Component {
 
     render() {
         if (!this.store.isLoaded && !this.store.crosswordId) {
+            if (this.store.state === "loading") {
+                return (<div>
+                    <h2>Feeling Lucky</h2>
+                    <p>Generating a surprise crossword for you...</p>
+                </div>)
+            }
             return (<div>
-                <span>Feeling lucky? Create a new crossword here:</span>
+                <h2>Feeling Lucky?</h2>
+                <span>Create a new crossword  </span>
                 <button onClick={() => this.createNewCrossword()}>Create new crossword</button>
             </div>)
         }
