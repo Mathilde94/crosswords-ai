@@ -41,12 +41,17 @@ class ClueGenerator(PromptInterface):
     ) -> List[Clue]:
         clues = []
         for concept in concepts:
-            for _ in range(tries):
-                clue_text = self.llm_execute(
-                    word=concept.word, title=title, section=section, concepts=concepts
-                )
-                if clue_text == "" or "response:" in clue_text.lower():
-                    continue
-                clue = Clue(concept.word, clue_text)
-                clues.append(clue)
+            clue = self._get_clue(concept.word, title, section, concepts, left_tries=tries)
+            clues.append(clue)
         return clues
+
+    def _get_clue(self, word: str, title: str, section: str, concepts: List[Concept], left_tries=0) -> Clue:
+        clue_text = self.llm_execute(
+            word=word, title=title, section=section, concepts=concepts
+        )
+        clue = Clue(word, clue_text)
+        if not clue.is_valid() and left_tries > 0:
+            print("Retrying again as the clue was not valid and we can try again")
+            # Trying again for better LLM result luck
+            return self._get_clue(word, title, section, concepts, left_tries - 1)
+        return clue

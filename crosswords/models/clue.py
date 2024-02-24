@@ -17,6 +17,8 @@ class Clue:
         return (
             self.explanation != BAD_CLUE_EXPLANATION
             # and self.explanation != ""
+            and self.clue != ""
+            and "response:" not in self.clue.lower()
             and (self.word.lower() not in self.clue.lower())
             and ("across" not in self.clue.lower() and "down" not in self.clue.lower())
         )

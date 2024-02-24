@@ -92,4 +92,4 @@ class Executor(threading.Thread):
             concepts, title=title, section=section, tries=tries
         )
         # explainable_clues = await clues_explanation_operator.execute(clues)
-        return list(filter(lambda c: c.is_valid(), clues))
+        return clues

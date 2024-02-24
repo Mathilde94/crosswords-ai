@@ -20,7 +20,7 @@ York Times crosswords in [kaggle](https://www.kaggle.com/datasets/darinhawley/ne
 After fine-tuning it on my AWS account, I downloaded the main necessary files for the model and ran the inference on my local M2 mac.
 
 Comparing before and after with the fine tune models:
-![llama_models_comparison.jpeg](images%2Fllama_models_comparison.jpeg)
+![llama_models_comparison.jpeg](media%2Fllama_models_comparison.jpeg)
 
 Once I got a better model to generate clues from given words, I created a few components that help extracting concepts 
 from any content, generating a small crossword puzzle. 
@@ -54,9 +54,10 @@ To run and/or develop on the crosswords UI frontend, please check the README.md 
 Example of local crossword being generated:
 (Note: local fine-tuned LLama13B server takes requests sequentially which makes a full new crossword generation taking a few seconds)
 
+![crossword_ex_1](./media/crossword_ex_1.png)
+![crossword_ex_2](./media/crossword_ex_2.png)
+
 https://github.com/Mathilde94/crosswords-ai/assets/1518309/d33a9f47-c2c5-4d8a-a335-799388f2ad7f
-
-
 
 https://github.com/Mathilde94/crosswords-ai/assets/1518309/de34c048-4f25-40b8-920d-f161c1929108
 
