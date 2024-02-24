@@ -74,3 +74,4 @@ c o n d i t i o n a l
     - `coverage run -m unittest crosswords/**/*.py`
     - `coverage report -m`
 - Formatting: `python -m black crosswords`
+

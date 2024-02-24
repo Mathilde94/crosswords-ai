@@ -26,6 +26,7 @@
 }
 
 .cell {
+    font-size: xx-large;
     border: 1px solid grey;
     margin: 2px;
     width: 50px;

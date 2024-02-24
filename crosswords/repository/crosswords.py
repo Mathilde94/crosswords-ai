@@ -2,7 +2,7 @@ import json
 import redis
 import uuid
 
-from .constants import REDIS_HOST, REDIS_PORT
+from crosswords.repository.constants import REDIS_HOST, REDIS_PORT
 
 
 class CrosswordRepository:

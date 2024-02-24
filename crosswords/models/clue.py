@@ -16,7 +16,8 @@ class Clue:
     def is_valid(self):
         return (
             self.explanation != BAD_CLUE_EXPLANATION
-            and self.explanation != ""
+            # and self.explanation != ""
+            and (self.word.lower() not in self.clue.lower())
             and ("across" not in self.clue.lower() and "down" not in self.clue.lower())
         )
 

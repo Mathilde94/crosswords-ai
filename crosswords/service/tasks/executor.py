@@ -91,5 +91,5 @@ class Executor(threading.Thread):
         clues = await clues_generator.execute(
             concepts, title=title, section=section, tries=tries
         )
-        explainable_clues = await clues_explanation_operator.execute(clues)
-        return list(filter(lambda c: c.is_valid(), explainable_clues))
+        # explainable_clues = await clues_explanation_operator.execute(clues)
+        return list(filter(lambda c: c.is_valid(), clues))
