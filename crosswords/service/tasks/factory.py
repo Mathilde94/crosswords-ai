@@ -2,7 +2,6 @@ from __future__ import annotations
 from typing import Dict, List, Tuple
 
 from crosswords.models.concept import Concept
-
 from crosswords.models.board.crossword_board import CrosswordBoard
 from crosswords.models.board.exceptions import TooManyWordsError
 
