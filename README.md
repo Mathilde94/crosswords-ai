@@ -49,3 +49,8 @@ To run and/or develop on the crosswords UI frontend, please check the README.md 
 
 Example of local crossword being generated:
 (Note: local fine-tuned LLama13B server takes requests sequentially which makes a full new crossword generation taking a few seconds)
+
+https://github.com/Mathilde94/crosswords-ai/assets/1518309/d33a9f47-c2c5-4d8a-a335-799388f2ad7f
+
+
+
