@@ -34,8 +34,9 @@ uvicorn crosswords.main:app --reload
 ## Testing
 To test all is running, go to: http://0.0.0.0:8000/docs#/default and test `POST` and `GET` endpoints.
 
-![crossword_post.png](../images/crosswords_post.png)
-![crossword_get.png](../images/crossword_get.png)
+![crossword_overview.png](../media/crosswords_overview.png)
+![crossword_post.png](../media/crosswords_post.png)
+![crossword_get.png](../media/crossword_get.png)
 
 Running file `test_clues` for an individual crossword should return something like this:
 ```python 
