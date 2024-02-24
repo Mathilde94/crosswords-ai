@@ -25,14 +25,15 @@ from any content, generating a small crossword puzzle.
 A few modules in the crosswords domain:
 - `models` that contain the crossword board, clues, context and concept models
 - `service` that contains the main logic to generate a crossword:
-  - `concepts` to extract concepts/words from any text content
-  - `clues` to generate clues and their explanations from a concept word in a context
+  - `concepts` to extract words from any text content when we want to generate a crossword from a specific content
+  - `clues` to generate clues and their explanations from a word
   - `tasks` for the background tasks that creates the crosswords
+- `repository` that contains the crosswords sessions in Redis and a list of popular words available if we want to generate crosswords from random words.
 - `llm` that contains the logic to integrate with a background LLM and all the prompts directory
 
 ### API server and frontend
-- FastAPI under `controllers` that contain the main APIs routers
-- Webpack <TODO>
+- FastAPI server under `crosswords/<main|controllers>` that contain the main APIs routers
+- Webpack to serve the UI under `frontend`
 
 ## How to
 
@@ -40,5 +41,11 @@ A few modules in the crosswords domain:
 Please check the readme under `fine_tuning` for more details on fine tuning steps and how to run locally 
 the fine-tuned inference model.
 
-### Running server
-To run and/or develop on the crosswords FastAPI server, please check the readme under `crosswords`.
+### Running backend server
+To run and/or develop on the crosswords FastAPI server, please check the README.md under `crosswords`.
+
+### Running frontend server
+To run and/or develop on the crosswords UI frontend, please check the README.md under `frontend`.
+
+Example of local crossword being generated:
+(Note: local fine-tuned LLama13B server takes requests sequentially which makes a full new crossword generation taking a few seconds)
