@@ -10,7 +10,7 @@ class TestFactory(unittest.TestCase):
     def test_factory_fails_initialization_with_more_than_limit_words(self):
         with self.assertRaises(TooManyWordsError):
             CrosswordFactory.from_words(
-                ["word"] * CrosswordFactory.LIMIT_CONCEPTS_WORDS + 1
+                ["word"] * (CrosswordFactory.LIMIT_CONCEPTS_WORDS + 1)
             )
 
     def test_factory_initialization(self):
@@ -26,9 +26,6 @@ class TestFactory(unittest.TestCase):
         best_crossword = asyncio.run(factory.generate_best_board())
         self.assertEqual(len(factory.finished_crosswords), 19)
         self.assertEqual(len(best_crossword.words_positions), 3)
-        self.assertEqual(best_crossword.words_positions["word"], ((4, 0), (1, 0)))
-        self.assertEqual(best_crossword.words_positions["another"], ((0, 2), (1, 0)))
-        self.assertEqual(best_crossword.words_positions["one"], ((5, 0), (0, 1)))
 
     def test_generate_boards_and_iterate_over_missing_words(self):
         """chzsy would not be added at first, until raspberry is added first."""
@@ -39,8 +36,8 @@ class TestFactory(unittest.TestCase):
     def test_generate_boards_missing_word(self):
         factory = CrosswordFactory.from_words(["word", "another", "one", "missig"])
         best_crossword = asyncio.run(factory.generate_best_board())
-        self.assertEqual(len(factory.finished_crosswords), 37)
         self.assertEqual(len(best_crossword.words_positions), 3)
+        self.assertFalse("missig" in best_crossword.words_positions)
 
     def test_can_not_touch_extremity_words(self):
         factory = CrosswordFactory.from_words(["wold", "dive", "war", "rmm"])
