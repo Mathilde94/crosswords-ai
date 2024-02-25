@@ -42,6 +42,22 @@ class CrosswordBoard(Board):
         new_board.words_positions = self.words_positions.copy()
         return new_board
 
+    def __hash__(self):
+        ordered_words = sorted(self.words_positions.items())
+        hash_string = ""
+        for word in ordered_words:
+            hash_string += word[0] + ":"
+            hash_string += str(word[1])
+            hash_string += ";"
+        return hash(hash_string)
+
+    def __lt__(self, other):
+        if len(self.words_positions) == len(other.words_positions):
+            # less prioritized board if the board is not balanced, meaning that the difference
+            # between the width and the height is bigger
+            return abs(self.width - self.height) >= abs(other.width - other.height)
+        return len(self.words_positions) < len(other.words_positions)
+
     def serialize(self):
         data = super().serialize()
         data["words_position"] = self.words_positions

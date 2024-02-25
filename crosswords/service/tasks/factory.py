@@ -1,5 +1,10 @@
 from __future__ import annotations
+
+import threading
+import time
 from typing import Dict, List, Tuple
+
+from collections import deque
 
 from crosswords.models.concept import Concept
 from crosswords.models.board.crossword_board import CrosswordBoard
@@ -17,43 +22,110 @@ def get_letter_intersections(word1: str, word2: str) -> Dict[int, Tuple[int, str
 
 
 class CrosswordFactory:
-    TOP_CROSSWORDS = 3
-    LIMIT_CONCEPTS_WORDS = 10
+    LIMIT_CONCEPTS_WORDS = 15
+    TOP_INTERMEDIARY_CROSSWORDS = 100
+    INCREMENT_NEW_WORDS = 2
+    INITIAL_WORDS_BATCH = 5
 
     def __init__(self, concepts: List[Concept], width=50, height=50):
         if len(concepts) > self.LIMIT_CONCEPTS_WORDS:
-            raise TooManyWordsError("Please provide less than 10 words")
+            raise TooManyWordsError("Please provide less than {} words".format(CrosswordFactory.LIMIT_CONCEPTS_WORDS))
         self.concepts = concepts
+        self.words = [concept.word for concept in concepts]
         self.width = width
         self.height = height
-        self.crosswords = []
-        self.best_crosswords = []
+        self.queue_crosswords = None
+        self.finished_crosswords = []
         self.best_crossword = None
 
     async def generate_best_board(self) -> CrosswordBoard:
-        initial_crossword = CrosswordBoard(self.width, self.height)
-        initial_crossword.set_first_word(self.concepts[0].word)
-        self.crosswords.append(initial_crossword)
-        for i in range(1, len(self.concepts)):
-            nb_boards = len(self.crosswords)
-            for index in range(nb_boards):
-                self.crosswords += CrosswordFactory.next_boards_with_word(
-                    self.crosswords[index], self.concepts[i].word
-                )
+        start_time = int(time.time())
+        self.finished_crosswords = self.build_initial_board_set(self.words[:CrosswordFactory.INITIAL_WORDS_BATCH])
+        for i in range(int(max(0, (len(self.words) - CrosswordFactory.INITIAL_WORDS_BATCH) / CrosswordFactory.INCREMENT_NEW_WORDS)) + 1):
+            next_words = self.words[:CrosswordFactory.INITIAL_WORDS_BATCH + (CrosswordFactory.INCREMENT_NEW_WORDS * i)]
+            self.build_from_boards(self.finished_crosswords, next_words)
+            # clean up and take top ones so far on that iteration
+            max_number_words = max([len(board.words_positions) for board in self.finished_crosswords])
+            self.finished_crosswords = [c for c in self.finished_crosswords if len(c.words_positions) == max_number_words]
+            self.finished_crosswords = list(set(self.finished_crosswords))
+            self.finished_crosswords.sort()
+            self.finished_crosswords = self.finished_crosswords[:CrosswordFactory.TOP_INTERMEDIARY_CROSSWORDS]
 
-        for board in self.crosswords:
-            board.trim()
+        for board_index in range(len(self.finished_crosswords)):
+            self.finished_crosswords[board_index].trim()
 
-        # now fetch the top 5 boards:
-        self.best_crosswords = sorted(
-            self.crosswords,
-            key=lambda x: (len(x.words_positions), x.density),
-            reverse=True,
-        )[: self.TOP_CROSSWORDS]
+        self.finished_crosswords.sort(key=lambda x: x.density, reverse=True)
 
         # Set the best board
-        self.best_crossword = self.best_crosswords[0]
+        self.best_crossword = self.finished_crosswords[0]
+        print("Done generating the board.... Took: ", int(time.time()) - start_time, " seconds")
         return self.best_crossword
+
+    def build_initial_board_set(self, words: List[str] = None):
+        initial_crosswords = []
+        for word in words:
+            c = CrosswordBoard(self.width, self.height)
+            c.set_first_word(word)
+            initial_crosswords.append(c)
+        return initial_crosswords
+
+    def build_from_boards(self, crosswords: List[CrosswordBoard], words: List[str] = None):
+        print("Building board set including: ", words)
+        initial_crosswords = deque(crosswords)
+        max_number_words = 1
+        while initial_crosswords:
+            if max_number_words < len(words):
+                max_number_words = max([len(board.words_positions) for board in initial_crosswords])
+            current_board = initial_crosswords.pop()
+            if len(current_board.words_positions) == len(words):
+                self.finished_crosswords.append(current_board)
+            else:
+                missing_words = list(set(words) - set(current_board.words_positions))
+                missing_words.sort()
+                for missing_word in missing_words:
+                    new_boards = CrosswordFactory.next_boards_with_word(current_board, missing_word)
+                    if len(new_boards) == 0 and len(current_board.words_positions) >= max_number_words:
+                        self.finished_crosswords.append(current_board)
+
+                    for b in new_boards:
+                        # it is possible we get same configurations of past boards
+                        if b not in initial_crosswords:
+                            initial_crosswords.append(b)
+
+    def build_boards_from_permutations(self):
+        permutations = deque([[w] for w in self.words])
+        final_permutations = []
+        while permutations:
+            permutation = permutations.pop()
+            if len(permutation) == len(self.words):
+                final_permutations.append(permutation)
+            else:
+                for w in self.words:
+                    if w in permutation:
+                        continue
+                    new_permutation = permutation.copy()
+                    new_permutation.append(w)
+                    permutations.append(new_permutation)
+        print("All permutations:", len(final_permutations))
+
+        for path in final_permutations:
+            c = CrosswordBoard(self.width, self.height)
+            c.set_first_word(path[0])
+            # For this path, let s create all potential boards that can be generated from it
+            generated_boards_so_far = [c]
+            for word in path[1:]:
+                next_generated_boards = []
+                for board in generated_boards_so_far:
+                    new_boards = CrosswordFactory.next_boards_with_word(board, word)
+                    if len(new_boards) > 0:
+                        next_generated_boards.extend(new_boards)
+                if len(next_generated_boards) == 0:
+                    # we can not add this word to any of the current boards. We can stop here
+                    break
+                else:
+                    generated_boards_so_far = next_generated_boards
+            # print("For this path:", path, "we have", len(generated_boards_so_far), "boards")
+            self.finished_crosswords.extend(generated_boards_so_far)
 
     @staticmethod
     def next_boards_with_word(
@@ -82,9 +154,10 @@ class CrosswordFactory:
                 )
                 new_board = initial_board.__copy__()
                 word_placed = new_board.place_word(word, opposite_direction, new_start)
-                if word_placed:
+                if word_placed and new_board not in boards:
                     new_board.words_positions[word] = (new_start, opposite_direction)
                     boards.append(new_board)
+
         return boards
 
     @staticmethod

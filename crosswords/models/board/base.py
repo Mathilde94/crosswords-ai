@@ -39,6 +39,10 @@ class Board:
         """Check if a word can be placed on the board"""
         x, y = start
         dx, dy = direction
+        # Is the letter BEFORE the start of the word empty?
+        if self._is_valid_position(x - dx, y - dy) and self.matrix[x - dx][y - dy] != self.EMPTY_CELL:
+            return False
+
         for letter in word:
             if not self._is_valid_position(x, y):
                 return False
@@ -54,6 +58,10 @@ class Board:
                 return False
             x += dx
             y += dy
+
+        # Is the letter AFTER the end of the word empty?
+        if self._is_valid_position(x, y) and self.matrix[x][y] != self.EMPTY_CELL:
+            return False
         return True
 
     def _is_valid_position(self, x: int, y: int) -> bool:
@@ -109,7 +117,7 @@ class Board:
         return count / (self.height * self.width)
 
     def __str__(self):
-        output = "Density: {density}\n".format(density=self.density)
+        output = ""
         for i in range(self.height):
             for j in range(self.width):
                 output += self.matrix[i][j]

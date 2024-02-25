@@ -1,3 +1,5 @@
+import threading
+import time
 from typing import List
 
 from crosswords.llm.prompt_interface import PromptInterface
@@ -39,13 +41,15 @@ class ClueGenerator(PromptInterface):
         section: str = "",
         tries: int = 1,
     ) -> List[Clue]:
+        start_time = int(time.time())
         clues = []
         for concept in concepts:
-            clue = self._get_clue(concept.word, title, section, concepts, left_tries=tries)
+            clue = self.get_individual_clue(concept.word, title, section, concepts, left_tries=tries)
             clues.append(clue)
+        print("Done generating the clues.... Took: ", int(time.time()) - start_time, " seconds")
         return clues
 
-    def _get_clue(self, word: str, title: str, section: str, concepts: List[Concept], left_tries=0) -> Clue:
+    def get_individual_clue(self, word: str, title: str, section: str, concepts: List[Concept], left_tries=0) -> Clue:
         clue_text = self.llm_execute(
             word=word, title=title, section=section, concepts=concepts
         )
@@ -53,5 +57,5 @@ class ClueGenerator(PromptInterface):
         if not clue.is_valid() and left_tries > 0:
             print("Retrying again as the clue was not valid and we can try again")
             # Trying again for better LLM result luck
-            return self._get_clue(word, title, section, concepts, left_tries - 1)
+            return self.get_individual_clue(word, title, section, concepts, left_tries - 1)
         return clue

@@ -1,1 +1,1 @@
-LLAMA_FINETUNED_SERVER = "http://localhost:8080/completion"
+LLAMA_FINETUNED_SERVER = "http://localhost:8082/completion"

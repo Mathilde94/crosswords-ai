@@ -60,9 +60,8 @@ class Executor(threading.Thread):
             crossword.set_concepts(concepts)
 
         # Then generate the clues
-        clues, best_crossword = asyncio.run(
-            get_clues_and_crossword(crossword.concepts, title=context.title, section=context.section, tries=tries)
-        )
+        clues, best_crossword = get_clues_and_crossword(crossword.concepts, title=context.title, section=context.section, tries=tries)
+
         crossword.set_clues(clues)
         crossword.set_board(best_crossword)
         crossword.set_status(Status.COMPLETED)
