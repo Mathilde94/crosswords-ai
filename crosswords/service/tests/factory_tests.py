@@ -3,7 +3,6 @@ import unittest
 
 from crosswords.models.board.exceptions import TooManyWordsError
 from crosswords.service.tasks.factory import CrosswordFactory
-from crosswords.repository.constants import EXAMPLE_WORDS
 
 
 class TestFactory(unittest.TestCase):
