@@ -8,7 +8,9 @@ from crosswords.models.crossword import Crossword, CrosswordBuilder
 class CrosswordService:
 
     @staticmethod
-    def create_crossword(context: CrosswordContext, concepts: List[str] = None) -> Crossword:
+    def create_crossword(
+        context: CrosswordContext, concepts: List[str] = None
+    ) -> Crossword:
         crossword_builder = CrosswordBuilder(context)
         if concepts:
             crossword_builder.add_concepts([Concept(c) for c in concepts])

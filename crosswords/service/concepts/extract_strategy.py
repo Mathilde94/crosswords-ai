@@ -12,6 +12,6 @@ class SimpleParagraphExtractStrategy:
     def split(self, text: str) -> List[str]:
         words = text.split(" ")
         return [
-            " " .join(words[i: i + self.MAX_LENGTH_WORD_EXTRACT])
+            " ".join(words[i : i + self.MAX_LENGTH_WORD_EXTRACT])
             for i in range(0, len(words), self.MAX_LENGTH_WORD_EXTRACT)
         ]

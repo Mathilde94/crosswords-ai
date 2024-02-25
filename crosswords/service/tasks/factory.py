@@ -29,7 +29,11 @@ class CrosswordFactory:
 
     def __init__(self, concepts: List[Concept], width=50, height=50):
         if len(concepts) > self.LIMIT_CONCEPTS_WORDS:
-            raise TooManyWordsError("Please provide less than {} words".format(CrosswordFactory.LIMIT_CONCEPTS_WORDS))
+            raise TooManyWordsError(
+                "Please provide less than {} words".format(
+                    CrosswordFactory.LIMIT_CONCEPTS_WORDS
+                )
+            )
         self.concepts = concepts
         self.words = [concept.word for concept in concepts]
         self.width = width
@@ -40,16 +44,38 @@ class CrosswordFactory:
 
     async def generate_best_board(self) -> CrosswordBoard:
         start_time = int(time.time())
-        self.finished_crosswords = self.build_initial_board_set(self.words[:CrosswordFactory.INITIAL_WORDS_BATCH])
-        for i in range(int(max(0, (len(self.words) - CrosswordFactory.INITIAL_WORDS_BATCH) / CrosswordFactory.INCREMENT_NEW_WORDS)) + 1):
-            next_words = self.words[:CrosswordFactory.INITIAL_WORDS_BATCH + (CrosswordFactory.INCREMENT_NEW_WORDS * i)]
+        self.finished_crosswords = self.build_initial_board_set(
+            self.words[: CrosswordFactory.INITIAL_WORDS_BATCH]
+        )
+        for i in range(
+            int(
+                max(
+                    0,
+                    (len(self.words) - CrosswordFactory.INITIAL_WORDS_BATCH)
+                    / CrosswordFactory.INCREMENT_NEW_WORDS,
+                )
+            )
+            + 1
+        ):
+            next_words = self.words[
+                : CrosswordFactory.INITIAL_WORDS_BATCH
+                + (CrosswordFactory.INCREMENT_NEW_WORDS * i)
+            ]
             self.build_from_boards(self.finished_crosswords, next_words)
             # clean up and take top ones so far on that iteration
-            max_number_words = max([len(board.words_positions) for board in self.finished_crosswords])
-            self.finished_crosswords = [c for c in self.finished_crosswords if len(c.words_positions) == max_number_words]
+            max_number_words = max(
+                [len(board.words_positions) for board in self.finished_crosswords]
+            )
+            self.finished_crosswords = [
+                c
+                for c in self.finished_crosswords
+                if len(c.words_positions) == max_number_words
+            ]
             self.finished_crosswords = list(set(self.finished_crosswords))
             self.finished_crosswords.sort()
-            self.finished_crosswords = self.finished_crosswords[:CrosswordFactory.TOP_INTERMEDIARY_CROSSWORDS]
+            self.finished_crosswords = self.finished_crosswords[
+                : CrosswordFactory.TOP_INTERMEDIARY_CROSSWORDS
+            ]
 
         for board_index in range(len(self.finished_crosswords)):
             self.finished_crosswords[board_index].trim()
@@ -58,7 +84,11 @@ class CrosswordFactory:
 
         # Set the best board
         self.best_crossword = self.finished_crosswords[0]
-        print("Done generating the board.... Took: ", int(time.time()) - start_time, " seconds")
+        print(
+            "Done generating the board.... Took: ",
+            int(time.time()) - start_time,
+            " seconds",
+        )
         return self.best_crossword
 
     def build_initial_board_set(self, words: List[str] = None):
@@ -69,13 +99,17 @@ class CrosswordFactory:
             initial_crosswords.append(c)
         return initial_crosswords
 
-    def build_from_boards(self, crosswords: List[CrosswordBoard], words: List[str] = None):
+    def build_from_boards(
+        self, crosswords: List[CrosswordBoard], words: List[str] = None
+    ):
         print("Building board set including: ", words)
         initial_crosswords = deque(crosswords)
         max_number_words = 1
         while initial_crosswords:
             if max_number_words < len(words):
-                max_number_words = max([len(board.words_positions) for board in initial_crosswords])
+                max_number_words = max(
+                    [len(board.words_positions) for board in initial_crosswords]
+                )
             current_board = initial_crosswords.pop()
             if len(current_board.words_positions) == len(words):
                 self.finished_crosswords.append(current_board)
@@ -83,8 +117,13 @@ class CrosswordFactory:
                 missing_words = list(set(words) - set(current_board.words_positions))
                 missing_words.sort()
                 for missing_word in missing_words:
-                    new_boards = CrosswordFactory.next_boards_with_word(current_board, missing_word)
-                    if len(new_boards) == 0 and len(current_board.words_positions) >= max_number_words:
+                    new_boards = CrosswordFactory.next_boards_with_word(
+                        current_board, missing_word
+                    )
+                    if (
+                        len(new_boards) == 0
+                        and len(current_board.words_positions) >= max_number_words
+                    ):
                         self.finished_crosswords.append(current_board)
 
                     for b in new_boards:

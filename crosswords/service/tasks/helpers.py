@@ -13,14 +13,18 @@ clues_generator = ClueGenerator()
 
 
 def generate_clues(concepts, title, section, tries):
-    return asyncio.run(clues_generator.execute(concepts, title=title, section=section, tries=tries))
+    return asyncio.run(
+        clues_generator.execute(concepts, title=title, section=section, tries=tries)
+    )
 
 
 def generate_board(factory):
     return asyncio.run(factory.generate_best_board())
 
 
-def get_clues_and_crossword(concepts: List[Concept], title: str, section: str, tries: int = 1):
+def get_clues_and_crossword(
+    concepts: List[Concept], title: str, section: str, tries: int = 1
+):
     crosswords_factory = CrosswordFactory(concepts)
 
     with concurrent.futures.ThreadPoolExecutor() as executor:

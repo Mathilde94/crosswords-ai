@@ -31,9 +31,7 @@ async def create_from_random_concepts(background_tasks: BackgroundTasks):
 
 
 @crosswords_router.post("/verify", status_code=status.HTTP_201_CREATED)
-async def create(
-    crossword_verify_request: CrosswordVerifyRequest
-):
+async def create(crossword_verify_request: CrosswordVerifyRequest):
     try:
         crossword = CrosswordService.get_crossword(crossword_verify_request.id)
     except ValueError:

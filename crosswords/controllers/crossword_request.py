@@ -12,4 +12,3 @@ class CrosswordRequest(BaseModel):
 class CrosswordVerifyRequest(BaseModel):
     id: str
     matrix: List[List[str]]
-

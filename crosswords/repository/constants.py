@@ -13,4 +13,6 @@ sauce
 cheese
 bacon
 banana
-dog""".split("\n")
+dog""".split(
+    "\n"
+)

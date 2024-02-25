@@ -40,7 +40,10 @@ class Board:
         x, y = start
         dx, dy = direction
         # Is the letter BEFORE the start of the word empty?
-        if self._is_valid_position(x - dx, y - dy) and self.matrix[x - dx][y - dy] != self.EMPTY_CELL:
+        if (
+            self._is_valid_position(x - dx, y - dy)
+            and self.matrix[x - dx][y - dy] != self.EMPTY_CELL
+        ):
             return False
 
         for letter in word:
