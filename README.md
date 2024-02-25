@@ -57,9 +57,10 @@ Example of local crossword being generated:
 ![crossword_ex_1](./media/crossword_ex_1.png)
 ![crossword_ex_2](./media/crossword_ex_2.png)
 
-https://github.com/Mathilde94/crosswords-ai/assets/1518309/d33a9f47-c2c5-4d8a-a335-799388f2ad7f
 
-https://github.com/Mathilde94/crosswords-ai/assets/1518309/de34c048-4f25-40b8-920d-f161c1929108
+
+https://github.com/Mathilde94/crosswords-ai/assets/1518309/8c03d092-4478-4e79-8614-f78677debcf3
+
 
 
 
