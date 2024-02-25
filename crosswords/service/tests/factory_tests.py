@@ -60,6 +60,21 @@ class TestFactory(unittest.TestCase):
         )
         best_crossword = asyncio.run(factory.generate_best_board())
         self.assertEqual(len(best_crossword.words_positions), 9)
+    def test_generate_boards_more_words_ex_1(self):
+        factory = CrosswordFactory.from_words(
+            ['atmosphere', 'bootleg', 'granger', 'arrest', 'lasts', 'mayo', 'sung', 'fred', 'als']
+        )
+        best_crossword = asyncio.run(factory.generate_best_board())
+        self.assertEqual(len(best_crossword.words_positions), 9)
+
+    def test_generate_boards_more_words_ex_2(self):
+        factory = CrosswordFactory.from_words(
+            ['deposits', 'echoes', 'saigon', 'uneven', 'needle', 'kaplan', 'image', 'lefty', 'ussr']
+        )
+        best_crossword = asyncio.run(factory.generate_best_board())
+        print(best_crossword)
+        self.assertEqual(len(best_crossword.words_positions), 9)
+
 
     def test_generate_boards_more_words(self):
         factory = CrosswordFactory.from_words(

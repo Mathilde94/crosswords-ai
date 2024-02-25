@@ -53,9 +53,7 @@ class CrosswordBoard(Board):
 
     def __lt__(self, other):
         if len(self.words_positions) == len(other.words_positions):
-            # less prioritized board if the board is not balanced, meaning that the difference
-            # between the width and the height is bigger
-            return abs(self.width - self.height) >= abs(other.width - other.height)
+            return self.width < other.width
         return len(self.words_positions) < len(other.words_positions)
 
     def serialize(self):

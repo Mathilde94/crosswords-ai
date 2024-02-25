@@ -3,11 +3,17 @@
     flex-direction: row;
 }
 
+
+.clueContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 20px;
+}
+
 .clues {
     display: flex;
     flex-direction: column;
-    margin: 10px;
-    padding: 10px;
 
     .selected {
         background-color: lightgreen;
@@ -26,15 +32,15 @@
 }
 
 .cell {
-    font-size: xx-large;
+    font-size: large;
     border: 1px solid grey;
     margin: 2px;
-    width: 50px;
-    height: 50px;
+    min-width: 40px;
+    min-height: 30px;
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding-top: 20px;
+    padding-top: 10px;
 }
 
 .cell.selected {

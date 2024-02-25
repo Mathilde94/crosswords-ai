@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {observer} from 'mobx-react';
-import './styles.css';
 import BoardStore from "./board.mobx-store";
 import {action, runInAction} from "mobx";
+
+import './styles.css';
 
 @observer
 export default class BoardReactComponent extends Component {
@@ -67,7 +68,7 @@ export default class BoardReactComponent extends Component {
         const {crossword} = this.props
         return (
             <div className="board">
-                <div>{this.renderClues()}</div>
+                <div className="clueContainer">{this.renderClues()}</div>
                 <div>
                     {crossword.matrix.map((row, rowIndex) => (<div key={rowIndex}>
                         {this.renderRow(row, rowIndex)}
