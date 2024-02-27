@@ -7,8 +7,13 @@
 .clueContainer {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /*justify-content: center;*/
     margin-right: 20px;
+}
+
+.matrix {
+    border-bottom: 1px solid grey;
+    border-right: 1px solid grey;
 }
 
 .clues {
@@ -16,11 +21,27 @@
     flex-direction: column;
 
     .selected {
-        background-color: lightgreen;
+        background-color: #eeed90;
     }
 
     div {
         margin: 5px
+    }
+
+    .clue-type {
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    .clue {
+        font-size: 16px;
+        display: flex;
+        flex-direction: row;
+
+        .clue-global-index {
+            font-size: 12px;
+            margin-right: 5px;
+        }
     }
 }
 
@@ -33,21 +54,41 @@
 
 .cell {
     font-size: large;
-    border: 1px solid grey;
-    margin: 2px;
+    border-top: 1px solid grey;
+    border-left: 1px solid grey;
+    /*margin: 2px;*/
     min-width: 40px;
-    min-height: 30px;
+    min-height: 35px;
     display: flex;
-    align-items: center;
-    flex-direction: column;
-    padding-top: 10px;
+    flex-direction: row;
+
+    .beginning-clues {
+        color: #c100ff;
+        font-size: 8px;
+        position: relative;
+        top: 0;
+        right: 0;
+        width: 5px;
+        margin-left: -5px
+    }
+
+    .cell-content {
+        padding-top: 5px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        width:100%;
+        height: 100%;
+    }
+
 }
 
 .cell.selected {
-    background-color: lightgreen;
+    background-color: #eeed90;
 }
 
 .cell.empty {
-    border: 1px solid darkgray;
-    background-color: darkgray;
+    /*border: 1px solid darkgray;*/
+    background-color: lightgray;
+    color: lightgray;
 }

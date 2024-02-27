@@ -1,3 +1,8 @@
+export const DIRECTIONS = {
+    VERTICAL: 'VERTICAL',
+    HORIZONTAL: 'HORIZONTAL'
+};
+
 export class Position {
     constructor(props) {
         this.row = props.row
@@ -11,8 +16,8 @@ export class Clue {
         this.clue = props.clue
         this.position = props.position
         this.length = props.length
-        // to remove later:
         this.content = props.content
+        this.globalIndex = props.globalIndex
     }
 }
 
@@ -23,8 +28,7 @@ export default class Crossword {
         this.id = id
     }
 
-    fetchPositionsForClue(clueIndex) {
-        const clue = this.clues[clueIndex]
+    fetchPositionsForClue(clue) {
         const initialPosition = clue.position
         const direction = clue.position.direction
         let path = []
@@ -38,5 +42,13 @@ export default class Crossword {
             ])
         }
         return path;
+    }
+
+    getHorizontalClues() {
+        return this.clues.filter((clue) => clue.position.direction[1] === 1)
+    }
+
+    getVerticalClues() {
+        return this.clues.filter((clue) => clue.position.direction[1] === 0)
     }
 }

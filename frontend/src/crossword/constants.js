@@ -4,6 +4,4 @@ export const STATES = {
     INIT: 'init',
     LOADING: 'loading',
     FETCHING: 'fetching',
-    LOADED: 'loaded',
-    ERROR: 'error',
 };

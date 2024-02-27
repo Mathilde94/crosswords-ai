@@ -1,11 +1,10 @@
 import axios from "axios";
-import {runInAction, observable, action} from 'mobx';
+import {runInAction, observable, action, computed} from 'mobx';
 
 import {API_HOST_URL, STATES} from './constants'
-import Crossword, {Clue, Position} from "./model";
+import Crossword, {Clue, Position} from "./models";
 
 export default class CrosswordStore {
-    @observable accessor isLoaded = false;
     @observable accessor crossword = null;
     @observable accessor state = STATES.INIT;
 
@@ -13,35 +12,36 @@ export default class CrosswordStore {
         this.crosswordId = crosswordId;
     }
 
+    @computed
+    get isLoaded() {
+        return this.crossword !== null;
+    }
+
     @action
     setupCrossword(crossword) {
         this.crossword = crossword;
     }
-
-    setupLoadedState(loaded) {
-        runInAction(() => {
-            this.isLoaded = loaded;
-        })
-    }
-
     createCrosswordFromData(data) {
         const uniqueClues = {}
         let allClues = []
-        data.data.clues.forEach((clue) => {
+        let globalIndex = 1
+        data.data.clues.forEach((clue, index) => {
             if (uniqueClues[clue.clue] === undefined) {
                 uniqueClues[clue.clue] = clue.clue
                 if (clue.word in data.data.board.words_position) {
+                    const wordPositions = data.data.board.words_position[clue.word];
                     allClues = allClues.concat([new Clue({
                         clue: clue.clue,
                         position: new Position({
-                            row: data.data.board.words_position[clue.word][0][0],
-                            column: data.data.board.words_position[clue.word][0][1],
-                            direction: data.data.board.words_position[clue.word][1],
+                            row: wordPositions[0][0],
+                            column: wordPositions[0][1],
+                            direction: wordPositions[1],
                         }),
                         length: clue.word.length,
-                        // TODO: remove later
-                        content: clue.word
+                        word: clue.word,
+                        globalIndex,
                     })])
+                    globalIndex ++;
                 }
             }
         });
@@ -64,7 +64,6 @@ export default class CrosswordStore {
             }, 1000)
         } else {
             runInAction(() => {
-                this.isLoaded = true;
                 this.setupCrossword(this.createCrosswordFromData(data));
             });
         }
@@ -93,6 +92,5 @@ export default class CrosswordStore {
         runInAction(() => {
             this.crosswordId = data.data.id;
         });
-        return this.crossword
     }
 }
