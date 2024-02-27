@@ -37,7 +37,21 @@ class Crossword:
         self.concepts = concepts
 
     def set_clues(self, clues: List[Clue]):
-        self.clues = list(clues)
+        self.clues = clues
+
+    def get_ordered_clues(self):
+        words_orders = self.board.words_positions.copy()
+        words_orders = list(words_orders.items())
+        words_orders.sort(
+            key=lambda item: (item[1][0][0], item[1][0][1])
+        )
+        ordered_clues = []
+        for word, _ in words_orders:
+            for clue in self.clues:
+                if clue.word == word:
+                    ordered_clues.append(clue)
+                    break
+        return ordered_clues
 
     def set_board(self, board: CrosswordBoard):
         self.board = board
@@ -50,7 +64,7 @@ class Crossword:
             "id": self.id,
             "status": self.status.value,  # default to "created" if status is not set
             "concepts": [concept.serialize() for concept in self.concepts],
-            "clues": [clue.serialize() for clue in self.clues],
+            "clues": [clue.serialize() for clue in self.get_ordered_clues()],
             "board": self.board.serialize(),
             "context": self.context.serialize(),
         }
