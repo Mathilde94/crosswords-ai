@@ -1,7 +1,3 @@
-
-
-Uploading video_5.mov…
-
 # AI Powered Crosswords
 
 ## Introduction
@@ -58,8 +54,8 @@ Example of local crossword being generated:
 ![crossword_ex_2](./media/crossword_ex_2.png)
 ![crossword_ex_3](./media/crossword_ex_3.png)
 
+https://github.com/Mathilde94/crosswords-ai/assets/1518309/019ec758-349b-4d96-b2b3-849b606e3311
 
-https://github.com/Mathilde94/crosswords-ai/assets/1518309/8c03d092-4478-4e79-8614-f78677debcf3
 
 
 
