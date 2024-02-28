@@ -52,7 +52,12 @@ class CrosswordBoard(Board):
         return hash(hash_string)
 
     def __lt__(self, other):
+        # we prioritize the boards with more words
+        # if same amount of word, we prioritize the ones with more width
+        # if same width: we prioritize smaller height
         if len(self.words_positions) == len(other.words_positions):
+            if self.width == other.width:
+                return self.height > other.height
             return self.width < other.width
         return len(self.words_positions) < len(other.words_positions)
 
