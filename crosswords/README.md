@@ -40,33 +40,81 @@ To test all is running, go to: http://0.0.0.0:8000/docs#/default and test `POST`
 
 Running file `test_clues` for an individual crossword should return something like this:
 ```python 
-Concepts ['else', 'instruction', 'conditional', 'debug', 'function']
+"""
+Words ['analog', 'revoke', 'mario', 'dudes', 'binge', 'tilt', 'lan']
+Done generating the board.... Took:  1  seconds
+Done generating the clues.... Took:  9  seconds
 
-<Word: else, Clue: "If not, then ..." (Explanation: else is a synonym of otherwise)>
-<Word: else, Clue: "In case" (Explanation: else is a synonym of in case)>
-<Word: instruction, Clue: "Tell me what to do!" (Explanation: An instruction is an instruction to guess for a clue)>
-<Word: instruction, Clue: What a recipe is (Explanation: Instruction is a clue for it)>
-<Word: conditional, Clue: Like a "if" statement in programming (Explanation: The word to guess is "if")>
-<Word: conditional, Clue: ___ statement (Explanation: Conditional is a type of statement)>
-<Word: debug, Clue: Test out, as a program (Explanation: Debug is a synonym of test out)>
-<Word: debug, Clue: Find and fix a bug (Explanation: Debug is a verb which means to find and fix a bug)>
-<Word: debug, Clue: Test a program (Explanation: Debug is to test a program, as in "debug a new app")>
-<Word: function, Clue: Word with code (Explanation: function is a clue for it)>
+<Word: analog, Clue: "___ TV" (Explanation: )>
+<Word: revoke, Clue: Cancel, as a permit (Explanation: )>
+<Word: mario, Clue: Nintendo mascot (Explanation: )>
+<Word: dudes, Clue: Guys (Explanation: )>
+<Word: binge, Clue: Watch a whole season of in one sitting (Explanation: )>
+<Word: tilt, Clue: Push (Explanation: )>
+<Word: lan, Clue: - ___ Tran (Explanation: )>
 
-Best Crossword Words: {'else': ((2, 4), (0, 1)), 'instruction': ((0, 6), (1, 0)), 'conditional': ((0, 0), (0, 1)), 'debug': ((1, 4), (1, 0)), 'function': ((7, 2), (0, 1))}.
-Density: 0.2892561983471074
-c o n d i t i o n a l 
-. . . . d . n . . . . 
-. . . . e l s e . . . 
-. . . . b . t . . . . 
-. . . . u . r . . . . 
-. . . . g . u . . . . 
-. . . . . . c . . . . 
-. . f u n c t i o n . 
-. . . . . . i . . . . 
-. . . . . . o . . . . 
-. . . . . . n . . . . 
+Best Crossword Words: {'analog': ((3, 3), (0, 1)), 'binge': ((0, 8), (1, 0)), 'mario': ((2, 3), (1, 0)), 'revoke': ((6, 0), (0, 1)), 'dudes': ((3, 1), (1, 0)), 'tilt': ((1, 7), (0, 1)), 'lan': ((3, 6), (1, 0))}.
+. . . . . . . . b . .
+. . . . . . . t i l t
+. . . m . . . . n . .
+. d . a n a l o g . .
+. u . r . . a . e . .
+. d . i . . n . . . .
+r e v o k e . . . . .
+. s . . . . . . . . .
+"""
 ```
+Other examples with smaller and bigger set of words:
+```python
+"""
+Words ['dreaded', 'sweep', 'pawn', 'ion']
+<Word: dreaded, Clue: Frightening (Explanation: )>
+<Word: sweep, Clue: Floor-cleaning tool (Explanation: )>
+<Word: pawn, Clue: Chess piece that can move straight forward two squares (Explanation: )>
+<Word: ion, Clue: Chemistry symbol (Explanation: )>
+
+. . d . . 
+. . r . i 
+. . e . o 
+. p a w n 
+. . d . . 
+s w e e p 
+. . d . . 
+"""
+
+"""
+Words ['normandy', 'inactive', 'soprano', 'grating', 'meteor', 'nested', 'nested', 'ninjas', 'itunes', 'saint', 'diana', 'naps', 'lear', 'alta', 'roth']
+<Word: normandy, Clue: Where the Allies landed on D-Day (Explanation: )>
+<Word: inactive, Clue: ___ agent (Explanation: )>
+<Word: soprano, Clue: Highest female voice (Explanation: )>
+<Word: grating, Clue: Like some noise (Explanation: )>
+<Word: meteor, Clue: Rocket to stardom? (Explanation: )>
+<Word: nested, Clue: Like dolls in a dollhouse (Explanation: )>
+<Word: nested, Clue: Like dolls inside a dollhouse (Explanation: )>
+<Word: ninjas, Clue: Spying superheroes of Marvel Comics (Explanation: )>
+<Word: itunes, Clue: "___ in the Cloud," 2011 Steve Jobs keynote (Explanation: )>
+<Word: saint, Clue: ___ Louis de Montfort (Explanation: )>
+<Word: diana, Clue: Catherine of ___ (Explanation: )>
+<Word: naps, Clue: Brief slumbers (Explanation: )>
+<Word: lear, Clue: "The Fool doth think he is wise, but the Wiseman knows himself to be a (Explanation: )>
+<Word: alta, Clue: ___ Merez, French singer-songwriter (Explanation: )>
+<Word: roth, Clue: Beneficiary of an IRA, say (Explanation: )>
+
+. . . . . g . . . . . . . 
+. a . . . r o t h . . . . 
+. l . . . a . . . . . . . 
+. t . . . t . i t u n e s 
+n a p s . i . . . . i . . 
+. . . o . n o r m a n d y 
+. s . p . g . . e . j . . 
+. a . r . . d . t . a . . 
+. i n a c t i v e . s . . 
+. n . n . . a . o . . . . 
+. t . o . . n . r . . . . 
+. . . . l e a r . . . . . 
+"""
+```
+
 
 ## Developing
 

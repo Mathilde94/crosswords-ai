@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import threading
 import time
 from typing import Dict, List, Tuple
@@ -127,44 +128,8 @@ class CrosswordFactory:
                         self.finished_crosswords.append(current_board)
 
                     for b in new_boards:
-                        # it is possible we get same configurations of past boards
                         if b not in initial_crosswords:
                             initial_crosswords.append(b)
-
-    def build_boards_from_permutations(self):
-        permutations = deque([[w] for w in self.words])
-        final_permutations = []
-        while permutations:
-            permutation = permutations.pop()
-            if len(permutation) == len(self.words):
-                final_permutations.append(permutation)
-            else:
-                for w in self.words:
-                    if w in permutation:
-                        continue
-                    new_permutation = permutation.copy()
-                    new_permutation.append(w)
-                    permutations.append(new_permutation)
-        print("All permutations:", len(final_permutations))
-
-        for path in final_permutations:
-            c = CrosswordBoard(self.width, self.height)
-            c.set_first_word(path[0])
-            # For this path, let s create all potential boards that can be generated from it
-            generated_boards_so_far = [c]
-            for word in path[1:]:
-                next_generated_boards = []
-                for board in generated_boards_so_far:
-                    new_boards = CrosswordFactory.next_boards_with_word(board, word)
-                    if len(new_boards) > 0:
-                        next_generated_boards.extend(new_boards)
-                if len(next_generated_boards) == 0:
-                    # we can not add this word to any of the current boards. We can stop here
-                    break
-                else:
-                    generated_boards_so_far = next_generated_boards
-            # print("For this path:", path, "we have", len(generated_boards_so_far), "boards")
-            self.finished_crosswords.extend(generated_boards_so_far)
 
     @staticmethod
     def next_boards_with_word(
