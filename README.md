@@ -52,9 +52,9 @@ To run and/or develop on the crosswords FastAPI server, please check the README.
 ### Running frontend server
 To run and/or develop on the crosswords UI frontend, please check the README.md under `frontend`.
 
-Example of local crossword being generated:
-(Note: local fine-tuned LLama13B server takes requests sequentially which makes a full new crossword generation taking a few seconds)
+## Examples
 
+Example of some local crosswords being generated:
 ![crossword_ex_1](./media/crossword_ex_1.png)
 ![crossword_ex_2](./media/crossword_ex_2.png)
 ![crossword_ex_3](./media/crossword_ex_3.png)
@@ -63,8 +63,7 @@ Example of local crossword being generated:
 
 https://github.com/Mathilde94/crosswords-ai/assets/1518309/019ec758-349b-4d96-b2b3-849b606e3311
 
-
-
+(Note: local fine-tuned LLama13B server takes requests sequentially which makes a full new crossword generation taking a few seconds)
 
 
 
