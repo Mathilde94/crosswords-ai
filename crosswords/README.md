@@ -76,3 +76,9 @@ c o n d i t i o n a l
     - `coverage report -m`
 - Formatting: `python -m black crosswords`
 
+## Bag of words
+If you want to use random words, you can generate a bad og words from the NYT dataset:
+```shell
+cat nytcrosswords.csv| awk '{print $1}' |  awk -F','  '{print $2}' | sort | uniq > unique_words.txt
+```
+and save it in `/fine_tuning/dataset/unique_words.txt` 
